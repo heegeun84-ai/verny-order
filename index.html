@@ -218,7 +218,7 @@ textarea.inp{min-height:70px;}
 .stick-in button{font-size:15px;padding:14px 28px;}
 
 /* 할인 강조 배지 (1줄·세련) */
-.deal{margin-top:10px;font-size:12.5px;font-weight:600;color:var(--gold-deep);letter-spacing:-.01em;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.3;}
+.deal{margin-top:10px;font-size:12px;font-weight:600;color:var(--gold-deep);letter-spacing:-.01em;line-height:1.45;}
 .deal .star{color:var(--gold);margin-right:4px;font-size:12px;}
 .deal b{font-weight:800;color:var(--navy);}
 .deal.on{display:inline-block;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#fff;padding:6px 13px;border-radius:9px;font-weight:700;box-shadow:0 9px 18px -10px rgba(169,135,63,.9);}
@@ -276,10 +276,29 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
 .reveal.in{opacity:1;transform:none;}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;}}
+/* 진입 스플래시 */
+.splash{position:fixed;inset:0;z-index:200;background:radial-gradient(120% 70% at 50% 32%,#243458,#16223d 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .85s cubic-bezier(.7,0,.25,1), opacity .85s ease;}
+.splash.gone{transform:translateY(-102%);opacity:0;pointer-events:none;}
+.splash-inner{text-align:center;padding-bottom:16px;}
+.splash-est{font-weight:600;font-size:12.5px;letter-spacing:.5em;color:var(--gold-soft);padding-left:.5em;margin-bottom:16px;opacity:0;animation:spFade .7s ease .15s both;}
+.splash-word{font-weight:800;font-size:clamp(46px,16vw,70px);line-height:1;background:linear-gradient(180deg,#ffffff,#e4d09d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:0;animation:spWord 1s cubic-bezier(.2,.7,.2,1) .05s both;}
+.splash-line{width:38px;height:1px;background:var(--gold);margin:18px auto 0;opacity:0;animation:spFade .7s ease .5s both;}
+.splash-sub{font-size:11px;letter-spacing:.34em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-top:14px;opacity:0;animation:spFade .7s ease .62s both;}
+@keyframes spWord{0%{opacity:0;transform:translateY(12px) scale(.94);letter-spacing:.26em;}100%{opacity:1;transform:none;letter-spacing:.06em;}}
+@keyframes spFade{from{opacity:0}to{opacity:1}}
+@media(prefers-reduced-motion:reduce){.splash{display:none!important;}}
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
+<div class="splash" id="splash">
+  <div class="splash-inner">
+    <div class="splash-est">EST. VERNY</div>
+    <div class="splash-word">VERNY</div>
+    <div class="splash-line"></div>
+    <div class="splash-sub">Premium Business Socks</div>
+  </div>
+</div>
 <div class="wrap">
 
   <!-- HERO -->
@@ -590,10 +609,10 @@ function render(){
 
   // 10개 이상 자동할인 강조 배지 (세트·낱개 각각 판정)
   const dealSet=document.getElementById('setDeal'), dealSg=document.getElementById('singleDeal');
-  if(setB){ dealSet.className='deal on'; dealSet.innerHTML='<span class="star">✓</span> 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>으로 자동 할인'; }
-  else { dealSet.className='deal'; dealSet.innerHTML='<span class="star">★</span> 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>으로 자동 할인'; }
-  if(sgB){ dealSg.className='deal on'; dealSg.innerHTML='<span class="star">✓</span> 개당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>으로 자동 할인'; }
-  else { dealSg.className='deal'; dealSg.innerHTML='<span class="star">★</span> 개당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>으로 자동 할인'; }
+  if(setB){ dealSet.className='deal on'; dealSet.innerHTML='<span class="star">✓</span> 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b> 자동 할인 적용중'; }
+  else { dealSet.className='deal'; dealSet.innerHTML='<span class="star">★</span> 10세트 이상 구매시 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>으로 자동 할인'; }
+  if(sgB){ dealSg.className='deal on'; dealSg.innerHTML='<span class="star">✓</span> 개당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b> 자동 할인 적용중'; }
+  else { dealSg.className='deal'; dealSg.innerHTML='<span class="star">★</span> 10개 이상 구매시 개당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>으로 자동 할인'; }
 
   // 라인 합계
   setLine('setLine', qty.set*su);
@@ -824,6 +843,13 @@ if('IntersectionObserver' in window){
 } else { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in')); }
 
 render();
+
+// 진입 스플래시 자동 해제
+(function(){
+  var sp=document.getElementById('splash'); if(!sp) return;
+  setTimeout(function(){ sp.classList.add('gone'); }, 1400);
+  setTimeout(function(){ if(sp.parentNode) sp.parentNode.removeChild(sp); }, 2350);
+})();
 </script>
 </body>
 </html>
