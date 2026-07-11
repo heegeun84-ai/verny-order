@@ -264,7 +264,7 @@ textarea.inp{min-height:70px;}
           <img class="p-thumb" src="./assets/hero-set.jpg" alt="선물세트">
           <div class="p-info">
             <div class="p-name">VERNY 선물세트</div>
-            <div class="p-desc">3족 구성 · 블랙 · 딥네이비 · 차콜 <b>각 1족</b><br><span class="hl">수입 밍크지</span> 네이비 기프트 박스 포함</div>
+            <div class="p-desc">3족 구성 · 블랙 · 딥네이비 · 차콜 <b>각 1족</b><br><span class="hl">수입 밍크지</span> 네이비 기프트 박스 포함<br><span style="color:var(--gold-deep);font-weight:600;">※ 쇼핑백 별도구매</span></div>
             <div class="p-price">
               <span class="now serif" id="setPrice">26,900<span class="won">원</span></span>
               <span class="was" id="setWas">26,900원</span>
@@ -461,15 +461,16 @@ textarea.inp{min-height:70px;}
       · 입금 확인 후 순차 발송됩니다.<br>
       · 현금영수증 · 세금계산서 발행 가능합니다.
     </div>
-    <div class="preview-flag" id="previewFlag">미리보기 모드 · 이메일 발송은 Web3Forms 연결 후 작동합니다.</div>
+    <div class="preview-flag" id="previewFlag">미리보기 모드 · 수신 이메일 미설정 상태입니다.</div>
     <button class="done-close" id="doneClose">확인 · 새 주문</button>
   </div>
 </div>
 
 <script>
 /* ===================== 설정 ===================== */
-// 주문 알림 이메일 연결: web3forms.com 에서 발급받은 access key 입력 (미입력 시 미리보기 모드)
-const WEB3FORMS_ACCESS_KEY = "___";
+// 주문 알림 받을 이메일 (FormSubmit.co 사용). 첫 주문 1건 넣으면 이 메일로 '활성화 링크'가 오고, 1회 클릭하면 이후 모든 주문이 여기로 들어옵니다.
+// ▶ 나중에 이 한 줄만 바꾸면 수신 이메일 변경 가능 (재배포).
+const ORDER_EMAIL = "heegeun84@gmail.com";
 
 // 가격 (원)  ch = 채널가(02, 10개 미만) / bulk = 대량가(03, 10개 이상)
 const PRICE = {
@@ -668,24 +669,25 @@ ${o.itemsText}
 
 ● 입금계좌: ${BANK.name} ${BANK.acct} (${BANK.holder})`;
 
-  const keyed = WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY.indexOf('___')===-1;
-  if(keyed){
+  const sendable = ORDER_EMAIL && ORDER_EMAIL.indexOf('@')>0 && ORDER_EMAIL.indexOf('___')===-1;
+  if(sendable){
     try{
-      await fetch('https://api.web3forms.com/submit',{
+      await fetch('https://formsubmit.co/ajax/'+encodeURIComponent(ORDER_EMAIL),{
         method:'POST', headers:{'Content-Type':'application/json',Accept:'application/json'},
         body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `[VERNY 주문] ${o.ordNo} · ${won(o.total)}`,
-          from_name: 'VERNY 주문서',
-          주문번호:o.ordNo, 총결제금액:won(o.total), 상품:o.itemsText,
-          주문자:o.orderer, 수취인:o.recipient, 배송지:o.address,
-          요청사항:o.memo, 증빙:o.proof, 적용단가:o.tierName,
+          _subject: `[VERNY 주문] ${o.ordNo} · ${won(o.total)}`,
+          _template: 'table',
+          _captcha: 'false',
+          주문번호:o.ordNo, 총결제금액:won(o.total), 적용단가:o.tierName,
+          상품:o.itemsText, 주문자:o.orderer, 수취인:o.recipient,
+          배송지:o.address, 요청사항:o.memo, 증빙:o.proof,
+          입금계좌:`${BANK.name} ${BANK.acct} (${BANK.holder})`,
           message: emailBody,
         }),
       });
     }catch(e){ console.error('email send fail',e); }
   }
-  showDone(o, !keyed);
+  showDone(o, !sendable);
   btn.disabled=false;
 });
 
