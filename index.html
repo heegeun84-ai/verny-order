@@ -28,7 +28,7 @@
 @font-face{font-family:'Paperlogy';font-weight:800;font-display:swap;src:url('https://cdn.jsdelivr.net/gh/fonts-archive/Paperlogy/Paperlogy-8ExtraBold.woff2') format('woff2');}
 :root{
   --navy:#17233f; --navy-2:#1f2f54; --navy-line:#2c3c62;
-  --gold:#c1a05a; --gold-soft:#d7bd88; --gold-deep:#a9873f;
+  --gold:#c1a05a; --gold-soft:#d7bd88; --gold-deep:#a9873f; --gold-bright:#f0c24d;
   --ivory:#f6f2ea; --paper:#ffffff; --paper-2:#fbf8f2;
   --ink:#23262d; --muted:#8d887b; --muted-2:#a7a294;
   --line:#ece5d7; --line-2:#e0d7c4;
@@ -52,7 +52,7 @@ input,select,textarea,button{font-family:inherit;color:inherit;}
 .brand-sub{font-size:11px;letter-spacing:.34em;color:rgba(255,255,255,.62);margin-top:14px;text-transform:uppercase;}
 .hero-rule{width:38px;height:1px;background:var(--gold);margin:20px auto;opacity:.8;}
 .hero-tag{font-size:14px;color:rgba(255,255,255,.9);font-weight:300;letter-spacing:.02em;}
-.hero-tag b{font-weight:500;color:#fff;}
+.hero-tag b{font-weight:700;color:var(--gold-bright);}
 .hero-img{margin:26px auto 0;max-width:340px;border-radius:14px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7);}
 .hero-badge{display:inline-block;margin-top:22px;font-size:11px;letter-spacing:.32em;color:var(--gold-soft);border:1px solid var(--navy-line);border-radius:999px;padding:9px 20px;text-transform:uppercase;}
 
@@ -251,6 +251,28 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 .addr-layer-head span{font-weight:600;font-size:16px;letter-spacing:.02em;}
 .addr-layer-head button{background:none;border:none;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:4px;}
 .addr-embed{flex:1;min-height:0;}
+
+/* 브랜드 스토리 */
+.story{border-bottom:1px solid var(--line);padding-bottom:32px;}
+.story-kicker{font-size:11px;letter-spacing:.3em;color:var(--gold-deep);text-transform:uppercase;font-weight:600;text-align:center;margin-bottom:14px;}
+.story-head{font-size:23px;font-weight:700;line-height:1.42;color:var(--navy);text-align:center;letter-spacing:-.01em;margin-bottom:18px;}
+.story-intro{font-size:14px;line-height:1.85;color:#5f5b51;text-align:center;margin:0 auto 24px;max-width:450px;}
+.story-intro b{color:var(--navy);font-weight:700;}
+.story-photo{border-radius:16px;overflow:hidden;margin:0 auto 26px;max-width:250px;box-shadow:0 22px 46px -24px rgba(23,35,63,.6);}
+.story-photo img{width:100%;display:block;}
+.story-plabel{text-align:center;font-size:14px;color:var(--navy);font-weight:500;letter-spacing:.02em;margin-bottom:22px;}
+.story-plabel b{font-weight:800;}
+.story-plabel::before{content:"";display:block;width:30px;height:1px;background:var(--gold);margin:0 auto 16px;}
+.principles{display:flex;flex-direction:column;gap:18px;margin-bottom:26px;}
+.principle{display:flex;gap:15px;align-items:flex-start;}
+.pnum{font-size:21px;font-weight:800;color:var(--gold);line-height:1.05;flex-shrink:0;width:32px;}
+.ptext b{display:block;font-size:15px;color:var(--navy);font-weight:700;margin-bottom:5px;line-height:1.45;}
+.ptext p{font-size:13px;line-height:1.72;color:#6d6a5e;}
+.story-close{text-align:center;font-size:14.5px;line-height:1.85;color:var(--navy);font-weight:500;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:22px 20px;}
+.story-close b{color:var(--gold-deep);font-weight:800;}
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
+.reveal.in{opacity:1;transform:none;}
+@media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;}}
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -270,6 +292,22 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 
   <!-- SHEET -->
   <main class="sheet">
+
+    <!-- 브랜드 스토리 -->
+    <section class="sec story">
+      <div class="story-kicker reveal">BRAND STORY</div>
+      <h2 class="story-head reveal">매일 아침, 망설임 없이 선택할 수 있는<br>단 하나의 디테일</h2>
+      <p class="story-intro reveal">지난 15년간, 매일 정장과 구두를 착용하고 치열한 비즈니스 현장을 누비며 수많은 기업과 고객의 리스크를 관리해 왔습니다. 늘 아쉬웠던 것은 비즈니스맨의 하루를 온전히 지탱해 줄 <b>'기본에 충실한 양말'의 부재</b>였습니다. 바쁜 아침, 어떤 수트와 구두에도 고민 없이 집어 들어 완벽한 핏을 연출할 수 있는 양말 — 그래서 VERNY를 직접 만들었습니다.</p>
+      <div class="story-photo reveal"><img src="./assets/sock-single.jpg" alt="VERNY 양말 디테일"></div>
+      <div class="story-plabel reveal">타협하지 않은 <b>4가지 원칙</b></div>
+      <div class="principles">
+        <div class="principle reveal"><span class="pnum">01</span><div class="ptext"><b>최적의 쾌적함 · 80% 코마사(Combed Cotton)</b><p>프리미엄 면 80%를 아낌없이 사용하여 탁월한 흡습성을 자랑합니다. 땀을 빠르게 흡수해 장시간 구두를 신어도 발이 겉돌거나 미끄러지지 않고 안정적인 착화감을 제공합니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">02</span><div class="ptext"><b>품격을 지키는 중목 기장</b><p>다리를 꼬거나 의자에 깊숙이 앉았을 때도 맨살이 절대 노출되지 않도록, 비즈니스 매너에 입각한 최적의 종아리 높이로 설계되었습니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">03</span><div class="ptext"><b>절묘한 텐션의 라이크라(Lycra) 밴드</b><p>최고급 라이크라 소재를 적절히 배합하여, 종아리를 과하게 조이는 피로감 없이 하루 종일 흘러내리지 않는 탄탄한 고정력을 유지합니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">04</span><div class="ptext"><b>변함없는 형태 복원력</b><p>원단을 넉넉하고 밀도 있게 편직했습니다. 잦은 세탁과 건조 후에도 수축을 최소화하여, 처음 신었을 때의 탄력과 형태를 그대로 유지합니다.</p></div></div>
+      </div>
+      <p class="story-close reveal">시선이 잘 닿지 않는 곳의 디테일이 전체의 품격을 결정합니다.<br>VERNY는 변치 않는 신뢰를 <b>발끝에서부터</b> 증명합니다.</p>
+    </section>
 
     <!-- 1. 상품 선택 -->
     <section class="sec">
@@ -459,7 +497,7 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
       <button class="acct-copy" id="footCopy">계좌번호 복사하기</button>
     </div>
     <div class="ft" style="margin-top:16px;">현금영수증 · 세금계산서 발행 가능</div>
-    <div class="fcopy">© VERUS · VERNY</div>
+    <div class="fcopy">© VERNY</div>
   </footer>
 </div>
 
@@ -506,7 +544,7 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 /* ===================== 설정 ===================== */
 // 주문 알림 받을 이메일 (FormSubmit.co 사용). 첫 주문 1건 넣으면 이 메일로 '활성화 링크'가 오고, 1회 클릭하면 이후 모든 주문이 여기로 들어옵니다.
 // ▶ 나중에 이 한 줄만 바꾸면 수신 이메일 변경 가능 (재배포).
-const ORDER_EMAIL = "heegeun84@gmail.com";
+const ORDER_EMAIL = "coworkers_official@naver.com";
 
 // 가격 (원)  ch = 채널가(02, 10개 미만) / bulk = 대량가(03, 10개 이상)
 const PRICE = {
@@ -773,6 +811,12 @@ $('footCopy').addEventListener('click', async function(){
   try{ await navigator.clipboard.writeText(BANK.acct.replace(/-/g,'')); this.textContent='복사되었습니다 ✓'; setTimeout(()=>this.textContent=t,1600); }
   catch(e){ prompt('계좌번호',BANK.acct); }
 });
+
+// 브랜드 스토리 스크롤 페이드인
+if('IntersectionObserver' in window){
+  const io=new IntersectionObserver((es)=>{es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}});},{threshold:.14});
+  document.querySelectorAll('.reveal').forEach(el=>io.observe(el));
+} else { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in')); }
 
 render();
 </script>
