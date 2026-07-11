@@ -545,9 +545,9 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 
 <script>
 /* ===================== 설정 ===================== */
-// 주문 알림 받을 이메일 (FormSubmit.co 사용). 첫 주문 1건 넣으면 이 메일로 '활성화 링크'가 오고, 1회 클릭하면 이후 모든 주문이 여기로 들어옵니다.
-// ▶ 나중에 이 한 줄만 바꾸면 수신 이메일 변경 가능 (재배포).
-const ORDER_EMAIL = "coworkers_official@naver.com";
+// 주문 알림 받을 이메일 (FormSubmit.co). 배열에 넣은 모든 주소로 발송됩니다.
+// ▶ 각 주소는 '첫 주문 1건' 시 활성화 링크가 오고 1회 클릭해야 이후 주문이 수신됩니다. 이 배열만 바꾸면 변경 가능.
+const ORDER_EMAILS = ["coworkers_official@naver.com", "gmlrms84@naver.com"];
 
 // 가격 (원)  ch = 채널가(02, 10개 미만) / bulk = 대량가(03, 10개 이상)
 const PRICE = {
@@ -767,23 +767,25 @@ ${o.itemsText}
 
 ● 입금계좌: ${BANK.name} ${BANK.acct} (${BANK.holder})`;
 
-  const sendable = ORDER_EMAIL && ORDER_EMAIL.indexOf('@')>0 && ORDER_EMAIL.indexOf('___')===-1;
+  const targets = (typeof ORDER_EMAILS!=='undefined' ? ORDER_EMAILS : []).filter(e=>e && e.indexOf('@')>0 && e.indexOf('___')===-1);
+  const sendable = targets.length>0;
   if(sendable){
-    try{
-      await fetch('https://formsubmit.co/ajax/'+encodeURIComponent(ORDER_EMAIL),{
+    const payload = {
+      _subject: `[VERNY 주문] ${o.ordNo} · ${won(o.total)}`,
+      _template: 'table',
+      _captcha: 'false',
+      주문번호:o.ordNo, 총결제금액:won(o.total), 적용단가:o.tierName,
+      상품:o.itemsText, 주문자:o.orderer, 수취인:o.recipient,
+      배송지:o.address, 요청사항:o.memo, 증빙:o.proof,
+      입금계좌:`${BANK.name} ${BANK.acct} (${BANK.holder})`,
+      message: emailBody,
+    };
+    await Promise.all(targets.map(email =>
+      fetch('https://formsubmit.co/ajax/'+encodeURIComponent(email),{
         method:'POST', headers:{'Content-Type':'application/json',Accept:'application/json'},
-        body: JSON.stringify({
-          _subject: `[VERNY 주문] ${o.ordNo} · ${won(o.total)}`,
-          _template: 'table',
-          _captcha: 'false',
-          주문번호:o.ordNo, 총결제금액:won(o.total), 적용단가:o.tierName,
-          상품:o.itemsText, 주문자:o.orderer, 수취인:o.recipient,
-          배송지:o.address, 요청사항:o.memo, 증빙:o.proof,
-          입금계좌:`${BANK.name} ${BANK.acct} (${BANK.holder})`,
-          message: emailBody,
-        }),
-      });
-    }catch(e){ console.error('email send fail',e); }
+        body: JSON.stringify(payload),
+      }).catch(e=>console.error('email send fail',email,e))
+    ));
   }
   showDone(o, !sendable);
   btn.disabled=false;
