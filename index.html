@@ -172,6 +172,48 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
   .field.row{grid-template-columns:1fr;}
 }
 @media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto;}}
+
+/* ===== 가독성·강조 업데이트 ===== */
+.sec-title{font-size:31px;}
+.p-name{font-size:18px;font-weight:700;letter-spacing:-.01em;}
+.p-desc{font-size:13.5px;color:#6d6a5e;line-height:1.6;}
+.p-price .now{font-size:28px;}
+.p-price .now .won{font-size:14px;}
+.p-price .tag{font-size:11px;padding:3px 9px;font-weight:600;}
+.p-price .was{font-size:14px;}
+.crow{gap:13px;}
+.crow .cn{font-size:16.5px;font-weight:500;}
+.crow .cn small{font-size:11.5px;}
+.swatch{width:30px;height:30px;}
+.p-thumb{width:84px;height:84px;}
+.stepper button{width:46px;height:48px;font-size:23px;}
+.stepper input{width:60px;height:48px;font-size:19px;font-weight:700;}
+.p-line{font-size:21px;}
+.p-foot .lbl{font-size:13.5px;}
+.sm-badge{font-size:13px;padding:8px 16px;}
+.sm-row{font-size:15.5px;padding:8px 0;}
+.sm-total .v{font-size:42px;}
+.sm-total .l{font-size:14.5px;}
+.sm-nudge{font-size:13.5px;padding:12px;}
+label.lb{font-size:13px;}
+.inp{font-size:16px;padding:14px 15px;}
+textarea.inp{min-height:70px;}
+.submit{font-size:18px;padding:21px;}
+.agree{font-size:12px;}
+.hero-tag{font-size:15.5px;}
+.stick-in .s-tot b{font-size:25px;}
+.stick-in button{font-size:15px;padding:14px 28px;}
+
+/* 할인 강조 배지 */
+.deal{margin-top:11px;font-size:14px;font-weight:700;color:var(--gold-deep);background:linear-gradient(180deg,#fbf3e1,#f6e7ca);border:1px solid #ecd8a9;border-radius:11px;padding:11px 13px;display:flex;align-items:center;gap:8px;line-height:1.35;}
+.deal.on{color:#fff;background:linear-gradient(135deg,var(--gold),var(--gold-deep));border-color:var(--gold-deep);box-shadow:0 12px 24px -12px rgba(169,135,63,.85);}
+.deal b{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:20px;letter-spacing:.01em;}
+.deal .star{font-size:15px;line-height:1;flex-shrink:0;}
+
+/* 하이라이트 */
+.hl{background:linear-gradient(180deg,transparent 52%,rgba(193,160,90,.35) 52%);padding:0 3px;font-weight:700;color:var(--navy);}
+.p-desc b{color:var(--navy);font-weight:700;}
+.sm-row.free b{font-weight:700;}
 </style>
 </head>
 <body>
@@ -207,12 +249,13 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
           <img class="p-thumb" src="./assets/hero-set.jpg" alt="선물세트">
           <div class="p-info">
             <div class="p-name">VERNY 선물세트</div>
-            <div class="p-desc">3족 구성 · 블랙 · 딥네이비 · 차콜 각 1족<br>네이비 기프트 박스 포함</div>
+            <div class="p-desc">3족 구성 · 블랙 · 딥네이비 · 차콜 <b>각 1족</b><br><span class="hl">수입 밍크지</span> 네이비 기프트 박스 포함</div>
             <div class="p-price">
-              <span class="now serif" id="setPrice">22,900<span class="won">원</span></span>
+              <span class="now serif" id="setPrice">26,900<span class="won">원</span></span>
               <span class="was" id="setWas">26,900원</span>
               <span class="tag" id="setTag">대량가</span>
             </div>
+            <div class="deal" id="setDeal"></div>
           </div>
         </div>
         <div class="p-foot">
@@ -228,7 +271,7 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <!-- 낱개 -->
       <article class="product" id="p-single">
         <div class="p-top">
-          <img class="p-thumb" src="./assets/colors.jpg" alt="낱개 양말">
+          <img class="p-thumb" src="./assets/sock-single.jpg" alt="낱개 양말">
           <div class="p-info">
             <div class="p-name">낱개 양말</div>
             <div class="p-desc">Made in Korea · 색상별 수량 선택</div>
@@ -238,6 +281,7 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
               <span class="tag" id="singleTag">대량가</span>
               <span style="font-size:11px;color:var(--muted);">/ 족</span>
             </div>
+            <div class="deal" id="singleDeal"></div>
           </div>
         </div>
         <div class="colors">
@@ -278,10 +322,10 @@ select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns
       <!-- 쇼핑백 -->
       <article class="product" id="p-bag">
         <div class="p-top">
-          <img class="p-thumb" src="./assets/sock-detail.jpg" alt="고급 쇼핑백">
+          <img class="p-thumb" src="./assets/bag.jpg" alt="고급 쇼핑백">
           <div class="p-info">
             <div class="p-name">고급 쇼핑백</div>
-            <div class="p-desc">네이비 · 골드 로고 · 선물 포장용 (선택)</div>
+            <div class="p-desc"><span class="hl">수입 밍크지</span> · 네이비 · 골드 로고 (선택)</div>
             <div class="p-price">
               <span class="now serif">2,000<span class="won">원</span></span>
               <span style="font-size:11px;color:var(--muted);">/ 개</span>
@@ -451,6 +495,16 @@ function render(){
   } else {
     setWas.style.display='none'; setTag.style.display='none';
     sgWas.style.display='none'; sgTag.style.display='none';
+  }
+
+  // 10개 이상 자동할인 강조 배지
+  const dealSet=document.getElementById('setDeal'), dealSg=document.getElementById('singleDeal');
+  if(bulk){
+    dealSet.className='deal on'; dealSet.innerHTML='<span class="star">✓</span> 대량가 적용 중 · 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>';
+    dealSg.className='deal on'; dealSg.innerHTML='<span class="star">✓</span> 대량가 적용 중 · 족당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>';
+  } else {
+    dealSet.className='deal'; dealSet.innerHTML='<span class="star">★</span> 10개 이상 주문 시 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b> 자동할인';
+    dealSg.className='deal'; dealSg.innerHTML='<span class="star">★</span> 10개 이상 주문 시 족당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b> 자동할인';
   }
 
   // 라인 합계
