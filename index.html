@@ -38,7 +38,7 @@
 }
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 html{scroll-behavior:smooth;}
-body{font-family:'Paperlogy',sans-serif;background:var(--ivory);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+body{font-family:'Paperlogy',sans-serif;background:var(--ivory);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;word-break:keep-all;overflow-wrap:break-word;}
 img{display:block;max-width:100%;}
 input,select,textarea,button{font-family:inherit;color:inherit;}
 .serif{font-family:'Paperlogy',sans-serif;}
@@ -258,7 +258,7 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 .story-head{font-size:23px;font-weight:700;line-height:1.42;color:var(--navy);text-align:center;letter-spacing:-.01em;margin-bottom:18px;}
 .story-intro{font-size:14px;line-height:1.85;color:#5f5b51;text-align:center;margin:0 auto 24px;max-width:450px;}
 .story-intro b{color:var(--navy);font-weight:700;}
-.story-photo{border-radius:16px;overflow:hidden;margin:0 auto 26px;max-width:250px;box-shadow:0 22px 46px -24px rgba(23,35,63,.6);}
+.story-photo{border-radius:16px;overflow:hidden;margin:4px 0 28px;box-shadow:0 22px 46px -24px rgba(23,35,63,.6);}
 .story-photo img{width:100%;display:block;}
 .story-plabel{text-align:center;font-size:14px;color:var(--navy);font-weight:500;letter-spacing:.02em;margin-bottom:22px;}
 .story-plabel b{font-weight:800;}
@@ -266,10 +266,12 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 .principles{display:flex;flex-direction:column;gap:18px;margin-bottom:26px;}
 .principle{display:flex;gap:15px;align-items:flex-start;}
 .pnum{font-size:21px;font-weight:800;color:var(--gold);line-height:1.05;flex-shrink:0;width:32px;}
-.ptext b{display:block;font-size:15px;color:var(--navy);font-weight:700;margin-bottom:5px;line-height:1.45;}
+.ptext .pt-title{display:block;font-size:15.5px;color:var(--navy);font-weight:700;margin-bottom:5px;line-height:1.45;}
 .ptext p{font-size:13px;line-height:1.72;color:#6d6a5e;}
-.story-close{text-align:center;font-size:14.5px;line-height:1.85;color:var(--navy);font-weight:500;background:var(--paper-2);border:1px solid var(--line);border-radius:16px;padding:22px 20px;}
-.story-close b{color:var(--gold-deep);font-weight:800;}
+.ptext p b{color:var(--navy);font-weight:700;}
+.story-close{text-align:center;font-size:15px;line-height:1.9;color:#fff;font-weight:500;background:linear-gradient(160deg,var(--navy-2),var(--navy));border:none;border-radius:18px;padding:28px 22px;box-shadow:0 24px 46px -22px rgba(23,35,63,.75);}
+.story-close b{color:#fff;font-weight:800;}
+.story-close b.gold{color:var(--gold-bright);}
 .reveal{opacity:0;transform:translateY(14px);transition:opacity .6s ease, transform .6s ease;}
 .reveal.in{opacity:1;transform:none;}
 @media(prefers-reduced-motion:reduce){.reveal{opacity:1!important;transform:none!important;}}
@@ -297,16 +299,16 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
     <section class="sec story">
       <div class="story-kicker reveal">BRAND STORY</div>
       <h2 class="story-head reveal">매일 아침, 망설임 없이 선택할 수 있는<br>단 하나의 디테일</h2>
-      <p class="story-intro reveal">지난 15년간, 매일 정장과 구두를 착용하고 치열한 비즈니스 현장을 누비며 수많은 기업과 고객의 리스크를 관리해 왔습니다. 늘 아쉬웠던 것은 비즈니스맨의 하루를 온전히 지탱해 줄 <b>'기본에 충실한 양말'의 부재</b>였습니다. 바쁜 아침, 어떤 수트와 구두에도 고민 없이 집어 들어 완벽한 핏을 연출할 수 있는 양말 — 그래서 VERNY를 직접 만들었습니다.</p>
-      <div class="story-photo reveal"><img src="./assets/sock-single.jpg" alt="VERNY 양말 디테일"></div>
+      <p class="story-intro reveal"><b>지난 15년간 수많은 기업의 리스크를 관리해 온 비즈니스맨</b>으로서 늘 아쉬웠던 것은, 하루를 온전히 지탱해 줄 <b>'기본에 충실한 양말'의 부재</b>였습니다. 바쁜 아침 고민 없이 완벽한 핏을 연출하기 위해, <b>VERNY를 직접 설계하고 만들었습니다.</b></p>
+      <div class="story-photo reveal"><img src="./assets/story.jpg" alt="VERNY 라이프스타일"></div>
       <div class="story-plabel reveal">타협하지 않은 <b>4가지 원칙</b></div>
       <div class="principles">
-        <div class="principle reveal"><span class="pnum">01</span><div class="ptext"><b>최적의 쾌적함 · 80% 코마사(Combed Cotton)</b><p>프리미엄 면 80%를 아낌없이 사용하여 탁월한 흡습성을 자랑합니다. 땀을 빠르게 흡수해 장시간 구두를 신어도 발이 겉돌거나 미끄러지지 않고 안정적인 착화감을 제공합니다.</p></div></div>
-        <div class="principle reveal"><span class="pnum">02</span><div class="ptext"><b>품격을 지키는 중목 기장</b><p>다리를 꼬거나 의자에 깊숙이 앉았을 때도 맨살이 절대 노출되지 않도록, 비즈니스 매너에 입각한 최적의 종아리 높이로 설계되었습니다.</p></div></div>
-        <div class="principle reveal"><span class="pnum">03</span><div class="ptext"><b>절묘한 텐션의 라이크라(Lycra) 밴드</b><p>최고급 라이크라 소재를 적절히 배합하여, 종아리를 과하게 조이는 피로감 없이 하루 종일 흘러내리지 않는 탄탄한 고정력을 유지합니다.</p></div></div>
-        <div class="principle reveal"><span class="pnum">04</span><div class="ptext"><b>변함없는 형태 복원력</b><p>원단을 넉넉하고 밀도 있게 편직했습니다. 잦은 세탁과 건조 후에도 수축을 최소화하여, 처음 신었을 때의 탄력과 형태를 그대로 유지합니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">01</span><div class="ptext"><span class="pt-title">하루 종일 쾌적한 80% 코마사</span><p>프리미엄 면 80%를 아낌없이 사용하여 <b>땀을 빠르게 흡수</b>하고, 장시간 구두를 신어도 발이 겉돌지 않는 <b>안정적인 착화감</b>을 제공합니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">02</span><div class="ptext"><span class="pt-title">맨살을 허락하지 않는 완벽한 기장</span><p>다리를 꼬거나 의자에 깊숙이 앉았을 때도 <b>맨살이 절대 노출되지 않도록</b>, 비즈니스 매너에 입각한 최적의 종아리 높이로 설계되었습니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">03</span><div class="ptext"><span class="pt-title">피로감 없이, 흘러내림 없는 라이크라</span><p>최고급 라이크라 소재를 배합하여, 종아리를 조이는 피로감 없이 <b>하루 종일 흘러내리지 않는 탄탄한 고정력</b>을 유지합니다.</p></div></div>
+        <div class="principle reveal"><span class="pnum">04</span><div class="ptext"><span class="pt-title">세탁 후에도 변함없는 핏과 복원력</span><p>원단을 넉넉하고 밀도 있게 편직하여, 잦은 세탁과 건조 후에도 수축을 최소화하고 <b>처음 신었을 때의 탄력을 그대로 유지</b>합니다.</p></div></div>
       </div>
-      <p class="story-close reveal">시선이 잘 닿지 않는 곳의 디테일이 전체의 품격을 결정합니다.<br>VERNY는 변치 않는 신뢰를 <b>발끝에서부터</b> 증명합니다.</p>
+      <p class="story-close reveal">시선이 잘 닿지 않는 곳의 디테일이 <b>전체의 품격</b>을 결정합니다.<br>VERNY는 변치 않는 신뢰를 <b class="gold">발끝에서부터</b> 증명합니다.</p>
     </section>
 
     <!-- 1. 상품 선택 -->
