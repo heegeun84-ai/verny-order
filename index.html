@@ -238,7 +238,21 @@ textarea.inp{min-height:70px;}
 .acct-holder{font-size:12.5px;color:rgba(255,255,255,.62);margin-top:7px;}
 .acct-copy{margin-top:16px;width:100%;border:none;background:linear-gradient(135deg,var(--gold),var(--gold-deep));color:#fff;font-weight:700;font-size:14.5px;padding:14px;border-radius:12px;cursor:pointer;letter-spacing:.02em;box-shadow:0 12px 24px -10px rgba(169,135,63,.9);transition:transform .12s;}
 .acct-copy:active{transform:translateY(1px) scale(.995);}
+
+/* 주소 검색 */
+.addr-row{display:flex;gap:10px;}
+.addr-row #rcpZip{flex:1;}
+.addr-btn{flex-shrink:0;border:none;background:linear-gradient(135deg,var(--navy-2),var(--navy));color:#fff;font-weight:600;font-size:14px;padding:0 22px;border-radius:11px;cursor:pointer;white-space:nowrap;letter-spacing:.02em;}
+.addr-btn:active{transform:translateY(1px);}
+input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
+.addr-layer{position:fixed;inset:0;z-index:70;background:#fff;display:none;flex-direction:column;}
+.addr-layer.show{display:flex;}
+.addr-layer-head{display:flex;justify-content:space-between;align-items:center;padding:15px 18px;background:var(--navy);color:#fff;}
+.addr-layer-head span{font-weight:600;font-size:16px;letter-spacing:.02em;}
+.addr-layer-head button{background:none;border:none;color:#fff;font-size:22px;line-height:1;cursor:pointer;padding:4px;}
+.addr-embed{flex:1;min-height:0;}
 </style>
+<script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
 <body>
 <div class="wrap">
@@ -401,7 +415,14 @@ textarea.inp{min-height:70px;}
         <div><label class="lb">수취인 연락처 <span class="req">*</span></label><input class="inp" id="rcpTel" inputmode="tel" placeholder="010-0000-0000"></div>
       </div>
 
-      <div class="field"><label class="lb">배송지 주소 <span class="req">*</span></label><textarea class="inp" id="rcpAddr" placeholder="도로명 주소 · 상세주소 · 우편번호"></textarea></div>
+      <div class="field"><label class="lb">배송지 주소 <span class="req">*</span></label>
+        <div class="addr-row">
+          <input class="inp" id="rcpZip" placeholder="우편번호" readonly>
+          <button type="button" class="addr-btn" id="addrBtn">주소 검색</button>
+        </div>
+        <input class="inp" id="rcpRoad" placeholder="주소 검색 버튼을 눌러주세요" readonly style="margin-top:10px;">
+        <input class="inp" id="rcpDetail" placeholder="상세주소 (동·호수 등)" style="margin-top:10px;">
+      </div>
 
       <div class="field"><label class="lb">배송 요청사항</label><input class="inp" id="memo" placeholder="예: 부재 시 문 앞, 배송 전 연락 등"></div>
 
@@ -450,6 +471,12 @@ textarea.inp{min-height:70px;}
   </div>
 </div>
 
+<!-- 주소 검색 레이어 -->
+<div class="addr-layer" id="addrLayer">
+  <div class="addr-layer-head"><span>주소 검색</span><button type="button" id="addrClose" aria-label="닫기">✕</button></div>
+  <div class="addr-embed" id="addrEmbed"></div>
+</div>
+
 <!-- DONE -->
 <div class="done" id="done">
   <div class="done-card">
@@ -458,7 +485,7 @@ textarea.inp{min-height:70px;}
     <div class="ord-no">주문번호 · <b id="ordNo">VERNY-000000-0000</b></div>
     <div class="pay-box">
       <div class="pay-amt"><span class="l">입금하실 금액</span><span class="v serif" id="payAmt">0원</span></div>
-      <div class="pay-bank">Shinhan Bank</div>
+      <div class="pay-bank">신한은행</div>
       <div class="pay-acct">
         <div class="a"><b>100-036-765551</b><small>예금주 · (주)베러스</small></div>
         <button class="copy-btn" id="copyAcct">계좌 복사</button>
@@ -604,6 +631,27 @@ $('proof').addEventListener('change', function(){
   $('proofTax').classList.toggle('show', this.value==='tax');
 });
 
+// 주소 검색 (다음 우편번호 · 임베드 오버레이)
+function openAddr(){
+  if(typeof daum==='undefined' || !daum.Postcode){ alert('주소 검색을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+  const el=$('addrEmbed'); el.innerHTML='';
+  new daum.Postcode({
+    oncomplete:function(data){
+      $('rcpZip').value=data.zonecode;
+      $('rcpRoad').value=data.roadAddress||data.jibunAddress;
+      $('rcpZip').classList.remove('invalid'); $('rcpRoad').classList.remove('invalid');
+      $('addrLayer').classList.remove('show'); document.body.style.overflow='';
+      $('rcpDetail').focus();
+    },
+    width:'100%', height:'100%'
+  }).embed($('addrEmbed'));
+  $('addrLayer').classList.add('show'); document.body.style.overflow='hidden';
+}
+$('addrBtn').addEventListener('click', openAddr);
+$('rcpZip').addEventListener('click', openAddr);
+$('rcpRoad').addEventListener('click', openAddr);
+$('addrClose').addEventListener('click',()=>{ $('addrLayer').classList.remove('show'); document.body.style.overflow=''; });
+
 $('stickBtn').addEventListener('click',()=>{
   document.getElementById('orderForm').scrollIntoView({behavior:'smooth'});
   setTimeout(()=>$('ordName').focus(),400);
@@ -612,7 +660,7 @@ $('stickBtn').addEventListener('click',()=>{
 /* ===================== 검증 & 제출 ===================== */
 function validate(){
   let ok=true; let first=null;
-  const need=['ordName','ordTel','rcpName','rcpTel','rcpAddr'];
+  const need=['ordName','ordTel','rcpName','rcpTel','rcpRoad','rcpDetail'];
   need.forEach(id=>{
     const el=$(id), bad=!el.value.trim();
     el.classList.toggle('invalid',bad);
@@ -643,7 +691,7 @@ function buildOrder(){
     goods: goodsAmount(), ship: shipFee(), total: grandTotal(),
     orderer: `${$('ordName').value} / ${$('ordTel').value}`,
     recipient: `${$('rcpName').value} / ${$('rcpTel').value}`,
-    address: $('rcpAddr').value,
+    address: [$('rcpZip').value?('('+$('rcpZip').value+')'):'', $('rcpRoad').value, $('rcpDetail').value].filter(Boolean).join(' '),
     memo: $('memo').value || '-',
     proof: proofMap[$('proof').value]+proofDetail,
   };
@@ -711,7 +759,7 @@ $('doneClose').addEventListener('click',()=>{
   $('done').classList.remove('show'); document.body.style.overflow='';
   Object.keys(qty).forEach(k=>qty[k]=0);
   document.querySelectorAll('.stepper input').forEach(i=>i.value=0);
-  ['ordName','ordTel','rcpName','rcpTel','rcpAddr','memo','cashNo','taxBiz','taxName','taxEmail'].forEach(id=>$(id).value='');
+  ['ordName','ordTel','rcpName','rcpTel','rcpZip','rcpRoad','rcpDetail','memo','cashNo','taxBiz','taxName','taxEmail'].forEach(id=>$(id).value='');
   $('sameChk').checked=false; $('proof').value='none';
   $('proofCash').classList.remove('show'); $('proofTax').classList.remove('show');
   render(); window.scrollTo({top:0,behavior:'smooth'});
