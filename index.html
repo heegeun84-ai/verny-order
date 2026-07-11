@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="theme-color" content="#17233f">
+<title>VERNY 주문서 · 베르니 프리미엄 비즈니스 양말</title>
+<meta name="description" content="VERNY 베르니 프리미엄 비즈니스 양말 주문서. Trust begins at the detail.">
+<meta property="og:title" content="VERNY 주문서">
+<meta property="og:description" content="품격 있는 하루는, 발끝의 선택에서 시작됩니다.">
+<meta property="og:image" content="./assets/hero-set.jpg">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#17233f; --navy-2:#1f2f54; --navy-line:#2c3c62;
+  --gold:#c1a05a; --gold-soft:#d7bd88; --gold-deep:#a9873f;
+  --ivory:#f6f2ea; --paper:#ffffff; --paper-2:#fbf8f2;
+  --ink:#23262d; --muted:#8d887b; --muted-2:#a7a294;
+  --line:#ece5d7; --line-2:#e0d7c4;
+  --ok:#2e7d5b;
+  --shadow:0 24px 60px -32px rgba(23,35,63,.45);
+  --r:16px;
+}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
+html{scroll-behavior:smooth;}
+body{font-family:'Noto Sans KR',sans-serif;background:var(--ivory);color:var(--ink);line-height:1.6;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+img{display:block;max-width:100%;}
+input,select,textarea,button{font-family:inherit;color:inherit;}
+.serif{font-family:'Cormorant Garamond',serif;}
+.wrap{max-width:600px;margin:0 auto;position:relative;}
+
+/* ===== HERO ===== */
+.hero{background:var(--navy);color:#fff;padding:40px 26px 130px;text-align:center;position:relative;overflow:hidden;}
+.hero::after{content:"";position:absolute;inset:0;background:radial-gradient(120% 70% at 50% -10%,rgba(193,160,90,.16),transparent 60%);pointer-events:none;}
+.brand-mono{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:15px;letter-spacing:.5em;color:var(--gold-soft);margin-bottom:20px;padding-left:.5em;}
+.brand-word{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:52px;letter-spacing:.22em;line-height:1;padding-left:.22em;background:linear-gradient(180deg,#fff,#e7ddc6);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;}
+.brand-sub{font-size:11px;letter-spacing:.34em;color:rgba(255,255,255,.62);margin-top:14px;text-transform:uppercase;}
+.hero-rule{width:38px;height:1px;background:var(--gold);margin:20px auto;opacity:.8;}
+.hero-tag{font-size:14px;color:rgba(255,255,255,.9);font-weight:300;letter-spacing:.02em;}
+.hero-tag b{font-weight:500;color:#fff;}
+.hero-img{margin:26px auto 0;max-width:340px;border-radius:14px;box-shadow:0 30px 60px -30px rgba(0,0,0,.7);}
+.hero-badge{display:inline-block;margin-top:22px;font-size:11px;letter-spacing:.32em;color:var(--gold-soft);border:1px solid var(--navy-line);border-radius:999px;padding:9px 20px;text-transform:uppercase;}
+
+/* ===== SHEET ===== */
+.sheet{background:var(--paper);border-radius:26px 26px 0 0;margin-top:-90px;position:relative;z-index:2;padding:34px 22px 26px;box-shadow:0 -20px 50px -30px rgba(23,35,63,.5);}
+.sec{margin-bottom:34px;}
+.sec-head{display:flex;align-items:baseline;justify-content:space-between;margin-bottom:18px;}
+.sec-kicker{font-size:11px;letter-spacing:.28em;color:var(--gold-deep);text-transform:uppercase;font-weight:500;}
+.sec-title{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:27px;letter-spacing:.01em;color:var(--navy);}
+.sec-step{font-family:'Cormorant Garamond',serif;font-size:15px;color:var(--muted-2);letter-spacing:.1em;}
+
+/* product cards */
+.product{border:1px solid var(--line);border-radius:var(--r);padding:16px;margin-bottom:14px;background:var(--paper);transition:border-color .25s, box-shadow .25s;}
+.product.active{border-color:var(--gold-soft);box-shadow:0 14px 30px -22px rgba(193,160,90,.7);}
+.p-top{display:flex;gap:14px;}
+.p-thumb{width:78px;height:78px;border-radius:12px;object-fit:cover;flex-shrink:0;background:var(--paper-2);border:1px solid var(--line);}
+.p-info{flex:1;min-width:0;}
+.p-name{font-weight:500;font-size:15.5px;letter-spacing:-.01em;}
+.p-desc{font-size:12px;color:var(--muted);margin-top:3px;line-height:1.5;}
+.p-price{margin-top:9px;display:flex;align-items:baseline;gap:8px;flex-wrap:wrap;}
+.p-price .now{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:22px;color:var(--navy);}
+.p-price .now .won{font-family:'Noto Sans KR';font-size:13px;font-weight:400;color:var(--muted);margin-left:1px;}
+.p-price .tag{font-size:10px;letter-spacing:.08em;color:var(--gold-deep);border:1px solid var(--line-2);border-radius:6px;padding:2px 7px;}
+.p-price .was{font-size:12px;color:var(--muted-2);text-decoration:line-through;}
+
+/* stepper */
+.stepper{display:inline-flex;align-items:center;border:1px solid var(--line-2);border-radius:11px;overflow:hidden;background:var(--paper);}
+.stepper button{width:38px;height:40px;border:none;background:var(--paper-2);font-size:19px;color:var(--navy);cursor:pointer;line-height:1;transition:background .15s;}
+.stepper button:active{background:var(--line);}
+.stepper input{width:52px;height:40px;border:none;text-align:center;font-size:16px;font-weight:500;background:#fff;-moz-appearance:textfield;}
+.stepper input::-webkit-outer-spin-button,.stepper input::-webkit-inner-spin-button{-webkit-appearance:none;margin:0;}
+.stepper input:focus{outline:none;}
+
+.p-foot{display:flex;justify-content:space-between;align-items:center;margin-top:14px;padding-top:14px;border-top:1px dashed var(--line);}
+.p-foot .lbl{font-size:12px;color:var(--muted);}
+.p-line{font-family:'Cormorant Garamond',serif;font-weight:600;font-size:18px;color:var(--navy);}
+.p-line.zero{color:var(--muted-2);}
+
+/* color rows (낱개) */
+.colors{margin-top:14px;display:flex;flex-direction:column;gap:10px;}
+.crow{display:flex;align-items:center;gap:12px;}
+.swatch{width:26px;height:26px;border-radius:50%;flex-shrink:0;border:1px solid rgba(0,0,0,.12);box-shadow:inset 0 1px 2px rgba(255,255,255,.15);}
+.sw-black{background:#1c1c1e;} .sw-navy{background:#1f2b48;} .sw-charcoal{background:#3b3f45;}
+.crow .cn{flex:1;font-size:14px;}
+.crow .cn small{display:block;font-size:11px;color:var(--muted-2);letter-spacing:.06em;}
+
+/* summary */
+.summary{background:linear-gradient(180deg,var(--navy),var(--navy-2));color:#fff;border-radius:var(--r);padding:22px 20px;box-shadow:var(--shadow);}
+.sm-badge{display:inline-flex;align-items:center;gap:7px;font-size:11px;letter-spacing:.1em;color:var(--navy);background:var(--gold-soft);border-radius:999px;padding:5px 13px;font-weight:500;margin-bottom:16px;}
+.sm-badge.plain{background:transparent;color:var(--gold-soft);border:1px solid var(--navy-line);}
+.sm-row{display:flex;justify-content:space-between;font-size:13.5px;color:rgba(255,255,255,.78);padding:6px 0;}
+.sm-row b{color:#fff;font-weight:400;}
+.sm-row.free b{color:var(--gold-soft);}
+.sm-div{height:1px;background:var(--navy-line);margin:12px 0;}
+.sm-total{display:flex;justify-content:space-between;align-items:baseline;}
+.sm-total .l{font-size:13px;color:rgba(255,255,255,.8);letter-spacing:.02em;}
+.sm-total .v{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:34px;color:#fff;}
+.sm-total .v .won{font-family:'Noto Sans KR';font-size:16px;font-weight:400;margin-left:2px;color:var(--gold-soft);}
+.sm-nudge{margin-top:14px;font-size:12px;color:var(--gold-soft);background:rgba(193,160,90,.12);border:1px solid rgba(193,160,90,.28);border-radius:10px;padding:10px 12px;text-align:center;line-height:1.5;}
+.sm-nudge.hide{display:none;}
+
+/* form */
+.field{margin-bottom:14px;}
+.field.row{display:grid;grid-template-columns:1fr 1fr;gap:10px;}
+label.lb{display:block;font-size:12px;color:var(--muted);margin-bottom:7px;letter-spacing:.02em;}
+label.lb .req{color:var(--gold-deep);}
+.inp{width:100%;background:var(--paper-2);border:1px solid var(--line-2);border-radius:11px;padding:13px 14px;font-size:15px;transition:border-color .2s, background .2s;}
+.inp:focus{outline:none;border-color:var(--gold);background:#fff;}
+textarea.inp{resize:vertical;min-height:64px;line-height:1.55;}
+select.inp{appearance:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' stroke='%238d887b' stroke-width='1.5' fill='none' stroke-linecap='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 14px center;padding-right:36px;}
+.same-check{display:flex;align-items:center;gap:9px;font-size:13px;color:var(--muted);cursor:pointer;margin:-4px 0 14px;user-select:none;}
+.same-check input{width:18px;height:18px;accent-color:var(--navy);}
+.cond{display:none;}
+.cond.show{display:block;animation:fade .3s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
+.err-msg{font-size:12px;color:#c0392b;margin-top:6px;display:none;}
+.inp.invalid{border-color:#e0a3a3;background:#fdf6f6;}
+
+/* submit */
+.submit{width:100%;border:none;cursor:pointer;padding:19px;border-radius:14px;font-size:16px;font-weight:500;letter-spacing:.02em;color:#fff;background:linear-gradient(135deg,var(--navy-2),var(--navy));box-shadow:0 18px 40px -18px rgba(23,35,63,.8);transition:transform .15s, opacity .2s;position:relative;overflow:hidden;}
+.submit:active{transform:translateY(2px);}
+.submit[disabled]{opacity:.5;cursor:not-allowed;}
+.submit .amt{font-family:'Cormorant Garamond',serif;font-weight:700;}
+.submit::after{content:"";position:absolute;top:0;left:-60%;width:40%;height:100%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.18),transparent);transform:skewX(-18deg);animation:sheen 4s ease-in-out infinite;}
+@keyframes sheen{0%,60%{left:-60%}100%{left:135%}}
+.agree{font-size:11.5px;color:var(--muted-2);text-align:center;margin-top:13px;line-height:1.6;}
+
+/* footer */
+.foot{background:var(--navy);color:rgba(255,255,255,.62);padding:34px 26px 40px;text-align:center;}
+.foot .fw{font-family:'Cormorant Garamond',serif;font-size:22px;letter-spacing:.24em;color:var(--gold-soft);padding-left:.24em;margin-bottom:14px;}
+.foot .ft{font-size:12.5px;line-height:1.9;}
+.foot .ft b{color:rgba(255,255,255,.85);font-weight:400;}
+.foot .fcopy{font-size:10.5px;letter-spacing:.2em;color:rgba(255,255,255,.32);margin-top:18px;text-transform:uppercase;}
+
+/* sticky bar */
+.stick{position:fixed;left:0;right:0;bottom:0;z-index:40;transform:translateY(120%);transition:transform .3s cubic-bezier(.2,.8,.2,1);pointer-events:none;}
+.stick.show{transform:none;pointer-events:auto;}
+.stick-in{max-width:600px;margin:0 auto;background:rgba(23,35,63,.97);backdrop-filter:blur(8px);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:12px 16px 16px;border-top:1px solid var(--navy-line);}
+.stick-in .s-tot{font-size:12px;color:rgba(255,255,255,.7);}
+.stick-in .s-tot b{display:block;font-family:'Cormorant Garamond',serif;font-weight:700;font-size:23px;color:#fff;}
+.stick-in button{border:none;background:var(--gold);color:var(--navy);font-weight:700;font-size:14px;padding:13px 26px;border-radius:11px;cursor:pointer;letter-spacing:.02em;}
+
+/* done overlay */
+.done{position:fixed;inset:0;z-index:60;background:rgba(15,22,40,.72);backdrop-filter:blur(6px);display:none;align-items:flex-end;justify-content:center;padding:0;}
+.done.show{display:flex;animation:fade .3s ease;}
+.done-card{background:var(--paper);width:100%;max-width:600px;border-radius:24px 24px 0 0;padding:32px 24px calc(30px + env(safe-area-inset-bottom));max-height:92vh;overflow-y:auto;animation:slideUp .4s cubic-bezier(.2,.9,.3,1);}
+@keyframes slideUp{from{transform:translateY(40px);opacity:.6}to{transform:none;opacity:1}}
+.done-check{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--gold-soft),var(--gold));display:flex;align-items:center;justify-content:center;margin:0 auto 16px;color:#fff;font-size:26px;box-shadow:0 12px 26px -10px rgba(193,160,90,.8);}
+.done h3{text-align:center;font-family:'Cormorant Garamond',serif;font-weight:600;font-size:26px;color:var(--navy);}
+.done .ord-no{text-align:center;font-size:13px;color:var(--muted);margin-top:6px;letter-spacing:.05em;}
+.done .ord-no b{color:var(--gold-deep);font-weight:500;}
+.pay-box{background:var(--navy);color:#fff;border-radius:16px;padding:20px;margin:22px 0 14px;}
+.pay-amt{display:flex;justify-content:space-between;align-items:baseline;padding-bottom:14px;border-bottom:1px solid var(--navy-line);margin-bottom:14px;}
+.pay-amt .l{font-size:13px;color:rgba(255,255,255,.75);}
+.pay-amt .v{font-family:'Cormorant Garamond',serif;font-weight:700;font-size:28px;color:var(--gold-soft);}
+.pay-bank{font-size:12px;color:rgba(255,255,255,.65);letter-spacing:.14em;text-transform:uppercase;margin-bottom:5px;}
+.pay-acct{display:flex;align-items:center;justify-content:space-between;gap:12px;}
+.pay-acct .a{font-size:16px;}
+.pay-acct .a b{font-weight:500;}
+.pay-acct .a small{display:block;font-size:12px;color:rgba(255,255,255,.6);margin-top:2px;}
+.copy-btn{border:1px solid var(--gold);background:transparent;color:var(--gold-soft);border-radius:9px;padding:9px 14px;font-size:12px;cursor:pointer;white-space:nowrap;transition:background .15s;}
+.copy-btn:active{background:rgba(193,160,90,.15);}
+.pay-note{font-size:12px;color:var(--muted);line-height:1.7;background:var(--paper-2);border:1px solid var(--line);border-radius:12px;padding:14px;margin-bottom:8px;}
+.pay-note b{color:var(--navy);font-weight:500;}
+.done-close{width:100%;border:none;background:var(--paper-2);border:1px solid var(--line-2);color:var(--navy);border-radius:12px;padding:15px;font-size:14px;font-weight:500;cursor:pointer;margin-top:16px;}
+.preview-flag{font-size:11px;text-align:center;color:var(--gold-deep);background:rgba(193,160,90,.1);border-radius:8px;padding:8px;margin-top:12px;display:none;}
+
+@media(max-width:400px){
+  .brand-word{font-size:44px;}
+  .field.row{grid-template-columns:1fr;}
+}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;scroll-behavior:auto;}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="brand-mono">EST. VERNY</div>
+    <div class="brand-word serif">VERNY</div>
+    <div class="brand-sub">Premium Business Socks</div>
+    <div class="hero-rule"></div>
+    <p class="hero-tag">품격 있는 하루는, <b>발끝의 선택</b>에서 시작됩니다.</p>
+    <img class="hero-img" src="./assets/hero-set.jpg" alt="VERNY 선물세트와 쇼핑백" loading="eager">
+    <div class="hero-badge">Online Order</div>
+  </header>
+
+  <!-- SHEET -->
+  <main class="sheet">
+
+    <!-- 1. 상품 선택 -->
+    <section class="sec">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">Select</div>
+          <h2 class="sec-title">상품 선택</h2>
+        </div>
+        <div class="sec-step serif">01 / 02</div>
+      </div>
+
+      <!-- 선물세트 -->
+      <article class="product" id="p-set">
+        <div class="p-top">
+          <img class="p-thumb" src="./assets/hero-set.jpg" alt="선물세트">
+          <div class="p-info">
+            <div class="p-name">VERNY 선물세트</div>
+            <div class="p-desc">3족 구성 · 블랙 · 딥네이비 · 차콜 각 1족<br>네이비 기프트 박스 포함</div>
+            <div class="p-price">
+              <span class="now serif" id="setPrice">22,900<span class="won">원</span></span>
+              <span class="was" id="setWas">26,900원</span>
+              <span class="tag" id="setTag">대량가</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-foot">
+          <div class="stepper" data-key="set">
+            <button type="button" data-d="-1">−</button>
+            <input type="number" inputmode="numeric" min="0" value="0" aria-label="선물세트 수량">
+            <button type="button" data-d="1">+</button>
+          </div>
+          <div class="p-line zero" id="setLine">0원</div>
+        </div>
+      </article>
+
+      <!-- 낱개 -->
+      <article class="product" id="p-single">
+        <div class="p-top">
+          <img class="p-thumb" src="./assets/colors.jpg" alt="낱개 양말">
+          <div class="p-info">
+            <div class="p-name">낱개 양말</div>
+            <div class="p-desc">Made in Korea · 색상별 수량 선택</div>
+            <div class="p-price">
+              <span class="now serif" id="singlePrice">5,900<span class="won">원</span></span>
+              <span class="was" id="singleWas">6,900원</span>
+              <span class="tag" id="singleTag">대량가</span>
+              <span style="font-size:11px;color:var(--muted);">/ 족</span>
+            </div>
+          </div>
+        </div>
+        <div class="colors">
+          <div class="crow">
+            <span class="swatch sw-black"></span>
+            <span class="cn">블랙 <small>BLACK</small></span>
+            <div class="stepper" data-key="black">
+              <button type="button" data-d="-1">−</button>
+              <input type="number" inputmode="numeric" min="0" value="0" aria-label="블랙 수량">
+              <button type="button" data-d="1">+</button>
+            </div>
+          </div>
+          <div class="crow">
+            <span class="swatch sw-navy"></span>
+            <span class="cn">딥네이비 <small>DEEP NAVY</small></span>
+            <div class="stepper" data-key="navy">
+              <button type="button" data-d="-1">−</button>
+              <input type="number" inputmode="numeric" min="0" value="0" aria-label="딥네이비 수량">
+              <button type="button" data-d="1">+</button>
+            </div>
+          </div>
+          <div class="crow">
+            <span class="swatch sw-charcoal"></span>
+            <span class="cn">차콜 <small>CHARCOAL</small></span>
+            <div class="stepper" data-key="charcoal">
+              <button type="button" data-d="-1">−</button>
+              <input type="number" inputmode="numeric" min="0" value="0" aria-label="차콜 수량">
+              <button type="button" data-d="1">+</button>
+            </div>
+          </div>
+        </div>
+        <div class="p-foot">
+          <div class="lbl" id="singleCount">0족 선택</div>
+          <div class="p-line zero" id="singleLine">0원</div>
+        </div>
+      </article>
+
+      <!-- 쇼핑백 -->
+      <article class="product" id="p-bag">
+        <div class="p-top">
+          <img class="p-thumb" src="./assets/sock-detail.jpg" alt="고급 쇼핑백">
+          <div class="p-info">
+            <div class="p-name">고급 쇼핑백</div>
+            <div class="p-desc">네이비 · 골드 로고 · 선물 포장용 (선택)</div>
+            <div class="p-price">
+              <span class="now serif">2,000<span class="won">원</span></span>
+              <span style="font-size:11px;color:var(--muted);">/ 개</span>
+            </div>
+          </div>
+        </div>
+        <div class="p-foot">
+          <div class="stepper" data-key="bag">
+            <button type="button" data-d="-1">−</button>
+            <input type="number" inputmode="numeric" min="0" value="0" aria-label="쇼핑백 수량">
+            <button type="button" data-d="1">+</button>
+          </div>
+          <div class="p-line zero" id="bagLine">0원</div>
+        </div>
+      </article>
+    </section>
+
+    <!-- SUMMARY -->
+    <section class="sec">
+      <div class="summary" id="summary">
+        <div class="sm-badge plain" id="tierBadge">상품을 담아주세요</div>
+        <div class="sm-row"><span>상품 금액</span><b id="sumGoods">0원</b></div>
+        <div class="sm-row" id="sumShipRow"><span>배송비</span><b id="sumShip">—</b></div>
+        <div class="sm-div"></div>
+        <div class="sm-total"><span class="l">총 결제금액</span><span class="v serif" id="sumTotal">0<span class="won">원</span></span></div>
+        <div class="sm-nudge hide" id="nudge"></div>
+      </div>
+    </section>
+
+    <!-- 2. 주문 정보 -->
+    <section class="sec" id="orderForm">
+      <div class="sec-head">
+        <div>
+          <div class="sec-kicker">Delivery</div>
+          <h2 class="sec-title">주문 · 배송 정보</h2>
+        </div>
+        <div class="sec-step serif">02 / 02</div>
+      </div>
+
+      <div class="field row">
+        <div><label class="lb">주문자 <span class="req">*</span></label><input class="inp" id="ordName" placeholder="이름"></div>
+        <div><label class="lb">주문자 연락처 <span class="req">*</span></label><input class="inp" id="ordTel" inputmode="tel" placeholder="010-0000-0000"></div>
+      </div>
+
+      <label class="same-check"><input type="checkbox" id="sameChk"> 수취인이 주문자와 동일합니다</label>
+
+      <div class="field row">
+        <div><label class="lb">수취인 <span class="req">*</span></label><input class="inp" id="rcpName" placeholder="받는 분"></div>
+        <div><label class="lb">수취인 연락처 <span class="req">*</span></label><input class="inp" id="rcpTel" inputmode="tel" placeholder="010-0000-0000"></div>
+      </div>
+
+      <div class="field"><label class="lb">배송지 주소 <span class="req">*</span></label><textarea class="inp" id="rcpAddr" placeholder="도로명 주소 · 상세주소 · 우편번호"></textarea></div>
+
+      <div class="field"><label class="lb">배송 요청사항</label><input class="inp" id="memo" placeholder="예: 부재 시 문 앞, 배송 전 연락 등"></div>
+
+      <div class="field"><label class="lb">증빙 서류</label>
+        <select class="inp" id="proof">
+          <option value="none">선택 안 함</option>
+          <option value="cash">현금영수증</option>
+          <option value="tax">세금계산서</option>
+        </select>
+      </div>
+      <div class="field cond" id="proofCash"><label class="lb">현금영수증 발급 번호</label><input class="inp" id="cashNo" inputmode="numeric" placeholder="휴대폰번호 또는 사업자번호"></div>
+      <div class="field cond" id="proofTax">
+        <label class="lb">세금계산서 정보</label>
+        <input class="inp" id="taxBiz" placeholder="사업자등록번호" inputmode="numeric" style="margin-bottom:10px;">
+        <input class="inp" id="taxName" placeholder="상호 / 대표자" style="margin-bottom:10px;">
+        <input class="inp" id="taxEmail" placeholder="계산서 수신 이메일" inputmode="email">
+      </div>
+
+      <button class="submit" id="submitBtn" disabled>
+        <span id="submitLabel">상품을 먼저 담아주세요</span>
+      </button>
+      <p class="agree">버튼을 누르면 주문 내역이 담당자에게 전달되고,<br>입금 계좌가 안내됩니다. · 결제: 무통장 입금 (카드 오픈 예정)</p>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer class="foot">
+    <div class="fw serif">VERNY</div>
+    <div class="ft">
+      <b>(주)베러스</b> · VERNY 베르니<br>
+      Trust begins at the detail<br>
+      입금계좌 · 신한 <b>100-036-765551</b><br>
+      현금영수증 · 세금계산서 발행 가능
+    </div>
+    <div class="fcopy">© VERUS · VERNY</div>
+  </footer>
+</div>
+
+<!-- STICKY BAR -->
+<div class="stick" id="stick">
+  <div class="stick-in">
+    <div class="s-tot">총 결제금액<b id="stickTotal">0원</b></div>
+    <button type="button" id="stickBtn">주문하기</button>
+  </div>
+</div>
+
+<!-- DONE -->
+<div class="done" id="done">
+  <div class="done-card">
+    <div class="done-check">✓</div>
+    <h3 class="serif">주문이 접수되었습니다</h3>
+    <div class="ord-no">주문번호 · <b id="ordNo">VERNY-000000-0000</b></div>
+    <div class="pay-box">
+      <div class="pay-amt"><span class="l">입금하실 금액</span><span class="v serif" id="payAmt">0원</span></div>
+      <div class="pay-bank">Shinhan Bank</div>
+      <div class="pay-acct">
+        <div class="a"><b>100-036-765551</b><small>예금주 · (주)베러스</small></div>
+        <button class="copy-btn" id="copyAcct">계좌 복사</button>
+      </div>
+    </div>
+    <div class="pay-note">
+      <b>입금 안내</b><br>
+      · 입금자명을 <b>주문자명과 동일</b>하게 입금해 주세요.<br>
+      · 입금 확인 후 순차 발송됩니다.<br>
+      · 현금영수증 · 세금계산서 발행 가능합니다.
+    </div>
+    <div class="preview-flag" id="previewFlag">미리보기 모드 · 이메일 발송은 Web3Forms 연결 후 작동합니다.</div>
+    <button class="done-close" id="doneClose">확인 · 새 주문</button>
+  </div>
+</div>
+
+<script>
+/* ===================== 설정 ===================== */
+// 주문 알림 이메일 연결: web3forms.com 에서 발급받은 access key 입력 (미입력 시 미리보기 모드)
+const WEB3FORMS_ACCESS_KEY = "___";
+
+// 가격 (원)  ch = 채널가(02, 10개 미만) / bulk = 대량가(03, 10개 이상)
+const PRICE = {
+  ch:   { set: 26900, single: 6900, bag: 2000 },
+  bulk: { set: 22900, single: 5900, bag: 2000 },
+};
+const BULK_MIN = 10;      // 세트+낱개 합계 이 수량 이상이면 대량가 + 무료배송
+const SHIP_FEE = 3000;    // 대량 기준 미만일 때 배송비
+
+const BANK = { name: "신한", acct: "100-036-765551", holder: "(주)베러스" };
+
+/* ===================== 상태 ===================== */
+const qty = { set:0, black:0, navy:0, charcoal:0, bag:0 };
+const won = n => n.toLocaleString('ko-KR') + '원';
+
+function singlesTotal(){ return qty.black + qty.navy + qty.charcoal; }
+function unitsTotal(){ return qty.set + singlesTotal(); }        // 티어 판정 기준 (쇼핑백 제외)
+function isBulk(){ return unitsTotal() >= BULK_MIN; }
+function tier(){ return isBulk() ? PRICE.bulk : PRICE.ch; }
+
+function goodsAmount(){
+  const p = tier();
+  return qty.set*p.set + singlesTotal()*p.single + qty.bag*p.bag;
+}
+function shipFee(){ return unitsTotal() === 0 ? 0 : (isBulk() ? 0 : SHIP_FEE); }
+function grandTotal(){ return goodsAmount() + shipFee(); }
+
+/* ===================== 렌더 ===================== */
+function render(){
+  const p = tier(), bulk = isBulk();
+
+  // 단가 표시
+  document.getElementById('setPrice').innerHTML = p.set.toLocaleString()+'<span class="won">원</span>';
+  document.getElementById('singlePrice').innerHTML = p.single.toLocaleString()+'<span class="won">원</span>';
+  const setWas=document.getElementById('setWas'), setTag=document.getElementById('setTag');
+  const sgWas=document.getElementById('singleWas'), sgTag=document.getElementById('singleTag');
+  if(bulk){
+    setWas.style.display=''; setWas.textContent=PRICE.ch.set.toLocaleString()+'원'; setTag.style.display=''; setTag.textContent='대량가';
+    sgWas.style.display=''; sgWas.textContent=PRICE.ch.single.toLocaleString()+'원'; sgTag.style.display=''; sgTag.textContent='대량가';
+  } else {
+    setWas.style.display='none'; setTag.style.display='none';
+    sgWas.style.display='none'; sgTag.style.display='none';
+  }
+
+  // 라인 합계
+  setLine('setLine', qty.set*p.set);
+  setLine('singleLine', singlesTotal()*p.single);
+  setLine('bagLine', qty.bag*p.bag);
+  document.getElementById('singleCount').textContent = singlesTotal()+'족 선택';
+
+  // active 카드
+  document.getElementById('p-set').classList.toggle('active', qty.set>0);
+  document.getElementById('p-single').classList.toggle('active', singlesTotal()>0);
+  document.getElementById('p-bag').classList.toggle('active', qty.bag>0);
+
+  // 요약
+  const goods=goodsAmount(), ship=shipFee(), total=grandTotal(), units=unitsTotal();
+  document.getElementById('sumGoods').textContent = won(goods);
+  const shipEl=document.getElementById('sumShip'), shipRow=document.getElementById('sumShipRow');
+  if(units===0){ shipEl.textContent='—'; shipRow.classList.remove('free'); }
+  else if(ship===0){ shipEl.textContent='무료'; shipRow.classList.add('free'); }
+  else { shipEl.textContent=won(ship); shipRow.classList.remove('free'); }
+  document.getElementById('sumTotal').innerHTML = total.toLocaleString()+'<span class="won">원</span>';
+
+  // 티어 배지 + 넛지
+  const badge=document.getElementById('tierBadge'), nudge=document.getElementById('nudge');
+  if(units===0){
+    badge.className='sm-badge plain'; badge.textContent='상품을 담아주세요';
+    nudge.classList.add('hide');
+  } else if(bulk){
+    badge.className='sm-badge'; badge.textContent='✦ 대량가 적용 · 무료배송';
+    nudge.classList.add('hide');
+  } else {
+    badge.className='sm-badge plain'; badge.textContent='채널가 적용';
+    const need=BULK_MIN-units;
+    nudge.classList.remove('hide');
+    nudge.innerHTML = `${need}개 더 담으면 <b>대량가 + 무료배송</b>으로 전환됩니다`;
+  }
+
+  // 제출 버튼 / 스티키
+  const btn=document.getElementById('submitBtn'), lbl=document.getElementById('submitLabel');
+  if(units===0){ btn.disabled=true; lbl.textContent='상품을 먼저 담아주세요'; }
+  else { btn.disabled=false; lbl.innerHTML=`<span class="amt">${total.toLocaleString()}원</span> · 주문 접수하기`; }
+  document.getElementById('stickTotal').textContent = won(total);
+  document.getElementById('stick').classList.toggle('show', units>0);
+}
+function setLine(id, v){
+  const el=document.getElementById(id);
+  el.textContent = won(v);
+  el.classList.toggle('zero', v===0);
+}
+
+/* ===================== 스텝퍼 ===================== */
+document.querySelectorAll('.stepper').forEach(st=>{
+  const key=st.dataset.key, input=st.querySelector('input');
+  st.querySelectorAll('button').forEach(b=>b.addEventListener('click',()=>{
+    let v=Math.max(0,(parseInt(input.value)||0)+parseInt(b.dataset.d));
+    input.value=v; qty[key]=v; render();
+  }));
+  input.addEventListener('input',()=>{
+    let v=Math.max(0,parseInt(input.value)||0); if(v>9999)v=9999;
+    qty[key]=v; render();
+  });
+  input.addEventListener('blur',()=>{ input.value=qty[key]; });
+});
+
+/* ===================== 폼 동작 ===================== */
+const $ = id => document.getElementById(id);
+$('sameChk').addEventListener('change', function(){
+  if(this.checked){ $('rcpName').value=$('ordName').value; $('rcpTel').value=$('ordTel').value; }
+});
+['ordName','ordTel'].forEach(id=>$(id).addEventListener('input',()=>{
+  if($('sameChk').checked){ $('rcpName').value=$('ordName').value; $('rcpTel').value=$('ordTel').value; }
+}));
+$('proof').addEventListener('change', function(){
+  $('proofCash').classList.toggle('show', this.value==='cash');
+  $('proofTax').classList.toggle('show', this.value==='tax');
+});
+
+$('stickBtn').addEventListener('click',()=>{
+  document.getElementById('orderForm').scrollIntoView({behavior:'smooth'});
+  setTimeout(()=>$('ordName').focus(),400);
+});
+
+/* ===================== 검증 & 제출 ===================== */
+function validate(){
+  let ok=true; let first=null;
+  const need=['ordName','ordTel','rcpName','rcpTel','rcpAddr'];
+  need.forEach(id=>{
+    const el=$(id), bad=!el.value.trim();
+    el.classList.toggle('invalid',bad);
+    if(bad&&ok){ ok=false; first=el; }
+  });
+  if(!ok && first){ first.scrollIntoView({behavior:'smooth',block:'center'}); first.focus(); }
+  return ok;
+}
+
+function buildOrder(){
+  const p=tier(), bulk=isBulk();
+  const items=[];
+  if(qty.set)   items.push(`선물세트 ${qty.set}세트 (개당 ${won(p.set)})`);
+  const cparts=[]; if(qty.black)cparts.push(`블랙 ${qty.black}`); if(qty.navy)cparts.push(`딥네이비 ${qty.navy}`); if(qty.charcoal)cparts.push(`차콜 ${qty.charcoal}`);
+  if(singlesTotal()) items.push(`낱개 ${singlesTotal()}족 [${cparts.join(', ')}] (족당 ${won(p.single)})`);
+  if(qty.bag)   items.push(`고급 쇼핑백 ${qty.bag}개 (개당 ${won(p.bag)})`);
+
+  const proofMap={none:'선택 안 함',cash:'현금영수증',tax:'세금계산서'};
+  let proofDetail='';
+  if($('proof').value==='cash') proofDetail=` (${$('cashNo').value||'번호 미기재'})`;
+  if($('proof').value==='tax')  proofDetail=` (사업자 ${$('taxBiz').value||'-'} / ${$('taxName').value||'-'} / ${$('taxEmail').value||'-'})`;
+
+  const ordNo = 'VERNY-' + ymd() + '-' + String(Math.floor(1000+Math.random()*9000));
+  return {
+    ordNo,
+    tierName: bulk?'대량가(03)':'채널가(02)',
+    items, itemsText: items.join('\n'),
+    goods: goodsAmount(), ship: shipFee(), total: grandTotal(),
+    orderer: `${$('ordName').value} / ${$('ordTel').value}`,
+    recipient: `${$('rcpName').value} / ${$('rcpTel').value}`,
+    address: $('rcpAddr').value,
+    memo: $('memo').value || '-',
+    proof: proofMap[$('proof').value]+proofDetail,
+  };
+}
+function ymd(){ const d=new Date(); return `${String(d.getFullYear()).slice(2)}${String(d.getMonth()+1).padStart(2,'0')}${String(d.getDate()).padStart(2,'0')}`; }
+
+let lastOrder=null;
+$('submitBtn').addEventListener('click', async ()=>{
+  if(unitsTotal()===0) return;
+  if(!validate()) return;
+  const btn=$('submitBtn'), lbl=$('submitLabel');
+  const o=buildOrder(); lastOrder=o;
+  btn.disabled=true; lbl.textContent='주문 접수 중...';
+
+  const emailBody =
+`■ VERNY 주문 접수 [${o.ordNo}]
+
+● 상품 (${o.tierName})
+${o.itemsText}
+
+● 금액
+상품금액 ${won(o.goods)}
+배송비 ${o.ship===0?'무료':won(o.ship)}
+────────────
+총 결제금액 ${won(o.total)}
+
+● 주문자: ${o.orderer}
+● 수취인: ${o.recipient}
+● 배송지: ${o.address}
+● 요청사항: ${o.memo}
+● 증빙: ${o.proof}
+
+● 입금계좌: ${BANK.name} ${BANK.acct} (${BANK.holder})`;
+
+  const keyed = WEB3FORMS_ACCESS_KEY && WEB3FORMS_ACCESS_KEY.indexOf('___')===-1;
+  if(keyed){
+    try{
+      await fetch('https://api.web3forms.com/submit',{
+        method:'POST', headers:{'Content-Type':'application/json',Accept:'application/json'},
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `[VERNY 주문] ${o.ordNo} · ${won(o.total)}`,
+          from_name: 'VERNY 주문서',
+          주문번호:o.ordNo, 총결제금액:won(o.total), 상품:o.itemsText,
+          주문자:o.orderer, 수취인:o.recipient, 배송지:o.address,
+          요청사항:o.memo, 증빙:o.proof, 적용단가:o.tierName,
+          message: emailBody,
+        }),
+      });
+    }catch(e){ console.error('email send fail',e); }
+  }
+  showDone(o, !keyed);
+  btn.disabled=false;
+});
+
+function showDone(o, preview){
+  $('ordNo').textContent=o.ordNo;
+  $('payAmt').textContent=won(o.total);
+  $('previewFlag').style.display = preview ? 'block':'none';
+  $('done').classList.add('show');
+  document.body.style.overflow='hidden';
+}
+$('doneClose').addEventListener('click',()=>{
+  $('done').classList.remove('show'); document.body.style.overflow='';
+  Object.keys(qty).forEach(k=>qty[k]=0);
+  document.querySelectorAll('.stepper input').forEach(i=>i.value=0);
+  ['ordName','ordTel','rcpName','rcpTel','rcpAddr','memo','cashNo','taxBiz','taxName','taxEmail'].forEach(id=>$(id).value='');
+  $('sameChk').checked=false; $('proof').value='none';
+  $('proofCash').classList.remove('show'); $('proofTax').classList.remove('show');
+  render(); window.scrollTo({top:0,behavior:'smooth'});
+});
+$('copyAcct').addEventListener('click', async function(){
+  try{ await navigator.clipboard.writeText(BANK.acct.replace(/-/g,'')); this.textContent='복사됨 ✓'; setTimeout(()=>this.textContent='계좌 복사',1500); }
+  catch(e){ prompt('계좌번호',BANK.acct); }
+});
+
+render();
+</script>
+</body>
+</html>
