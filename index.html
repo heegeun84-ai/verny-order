@@ -590,10 +590,10 @@ function render(){
 
   // 10개 이상 자동할인 강조 배지 (세트·낱개 각각 판정)
   const dealSet=document.getElementById('setDeal'), dealSg=document.getElementById('singleDeal');
-  if(setB){ dealSet.className='deal on'; dealSet.innerHTML='<span class="star">✓</span> 대량가 적용 · 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>'; }
-  else { dealSet.className='deal'; dealSet.innerHTML='<span class="star">★</span> 10세트 이상 시 <b>'+PRICE.bulk.set.toLocaleString()+'원</b> 자동할인'; }
-  if(sgB){ dealSg.className='deal on'; dealSg.innerHTML='<span class="star">✓</span> 대량가 적용 · 족당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>'; }
-  else { dealSg.className='deal'; dealSg.innerHTML='<span class="star">★</span> 10족 이상 시 <b>'+PRICE.bulk.single.toLocaleString()+'원</b> 자동할인'; }
+  if(setB){ dealSet.className='deal on'; dealSet.innerHTML='<span class="star">✓</span> 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>으로 자동 할인'; }
+  else { dealSet.className='deal'; dealSet.innerHTML='<span class="star">★</span> 세트당 <b>'+PRICE.bulk.set.toLocaleString()+'원</b>으로 자동 할인'; }
+  if(sgB){ dealSg.className='deal on'; dealSg.innerHTML='<span class="star">✓</span> 개당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>으로 자동 할인'; }
+  else { dealSg.className='deal'; dealSg.innerHTML='<span class="star">★</span> 개당 <b>'+PRICE.bulk.single.toLocaleString()+'원</b>으로 자동 할인'; }
 
   // 라인 합계
   setLine('setLine', qty.set*su);
