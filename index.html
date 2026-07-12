@@ -281,13 +281,30 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 /* 진입 스플래시 */
 .splash{position:fixed;inset:0;z-index:200;background:radial-gradient(120% 70% at 50% 32%,#243458,#16223d 72%);display:flex;flex-direction:column;align-items:center;justify-content:center;transition:transform .85s cubic-bezier(.7,0,.25,1), opacity .85s ease;}
 .splash.gone{transform:translateY(-102%);opacity:0;pointer-events:none;}
-.splash-inner{text-align:center;padding-bottom:16px;}
+.splash-inner{text-align:center;padding-bottom:16px;position:relative;z-index:3;}
 .splash-est{font-weight:600;font-size:12.5px;letter-spacing:.5em;color:var(--gold-soft);padding-left:.5em;margin-bottom:16px;opacity:0;animation:spFade .7s ease .15s both;}
 .splash-word{font-weight:800;font-size:clamp(46px,16vw,70px);line-height:1;background:linear-gradient(180deg,#ffffff,#e4d09d);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent;opacity:0;animation:spWord 1s cubic-bezier(.2,.7,.2,1) .05s both;}
 .splash-line{width:38px;height:1px;background:var(--gold);margin:18px auto 0;opacity:0;animation:spFade .7s ease .5s both;}
 .splash-sub{font-size:11px;letter-spacing:.34em;color:rgba(255,255,255,.55);text-transform:uppercase;margin-top:14px;opacity:0;animation:spFade .7s ease .62s both;}
 @keyframes spWord{0%{opacity:0;transform:translateY(12px) scale(.94);letter-spacing:.26em;}100%{opacity:1;transform:none;letter-spacing:.06em;}}
 @keyframes spFade{from{opacity:0}to{opacity:1}}
+.cine-bg{position:absolute;inset:0;overflow:hidden;z-index:1;animation:cineZoom 4.8s ease-out both;}
+@keyframes cineZoom{from{transform:scale(1.16)}to{transform:scale(1)}}
+.cine-img{position:absolute;inset:0;background-size:cover;background-position:center;opacity:0;filter:brightness(.6) contrast(1.03) saturate(1.05);}
+.cine-img.c1{background-image:url('./assets/hero-set.jpg');animation:kc1 4.8s ease both;}
+.cine-img.c2{background-image:url('./assets/sock-single.jpg');animation:kc2 4.8s ease both;}
+.cine-img.c3{background-image:url('./assets/bag.jpg');animation:kc3 4.8s ease both;}
+.cine-img.c4{background-image:url('./assets/story.jpg');animation:kc4 4.8s ease both;}
+@keyframes kc1{0%{opacity:0}5%{opacity:1}25%{opacity:1}33%{opacity:0}100%{opacity:0}}
+@keyframes kc2{24%{opacity:0}32%{opacity:1}48%{opacity:1}56%{opacity:0}100%{opacity:0}}
+@keyframes kc3{48%{opacity:0}56%{opacity:1}70%{opacity:1}78%{opacity:0}100%{opacity:0}}
+@keyframes kc4{70%{opacity:0}78%{opacity:1}100%{opacity:1}}
+.cine-veil{position:absolute;inset:0;z-index:2;background:linear-gradient(180deg,rgba(15,22,40,.6),rgba(15,22,40,.3) 42%,rgba(15,22,40,.8));}
+.cine-tag{position:absolute;left:0;right:0;bottom:54px;text-align:center;padding:0 24px;z-index:3;}
+.cine-tag .ct{color:#fff;opacity:0;}
+.cine-tag .ct1{font-size:15px;font-weight:500;animation:spFade .9s ease 1.7s both;}
+.cine-tag .ct2{font-size:11.5px;letter-spacing:.28em;color:var(--gold-soft);text-transform:uppercase;margin-top:9px;animation:spFade .9s ease 2.2s both;}
+.cine-skip{position:absolute;top:calc(16px + env(safe-area-inset-top));right:18px;z-index:4;background:rgba(255,255,255,.1);border:1px solid rgba(255,255,255,.22);color:rgba(255,255,255,.85);font-size:12px;font-family:inherit;padding:7px 14px;border-radius:999px;cursor:pointer;letter-spacing:.02em;opacity:0;animation:spFade .6s ease 1s both;}
 @media(prefers-reduced-motion:reduce){.splash{display:none!important;}}
 /* 프로 마감 — 토스트/스피너/검증 */
 .toast-wrap{position:fixed;left:0;right:0;bottom:24px;z-index:120;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 16px;}
@@ -304,12 +321,24 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 </head>
 <body>
 <div class="splash" id="splash">
+  <div class="cine-bg">
+    <div class="cine-img c1"></div>
+    <div class="cine-img c2"></div>
+    <div class="cine-img c3"></div>
+    <div class="cine-img c4"></div>
+  </div>
+  <div class="cine-veil"></div>
   <div class="splash-inner">
     <div class="splash-est">EST. VERNY</div>
     <div class="splash-word">VERNY</div>
     <div class="splash-line"></div>
     <div class="splash-sub">Premium Business Socks</div>
   </div>
+  <div class="cine-tag">
+    <div class="ct ct1">품격 있는 하루는, 발끝의 선택에서</div>
+    <div class="ct ct2">Trust begins at the detail</div>
+  </div>
+  <button class="cine-skip" id="cineSkip" type="button">건너뛰기 ›</button>
 </div>
 <div class="wrap">
 
@@ -872,11 +901,18 @@ if('IntersectionObserver' in window){
 
 render();
 
-// 진입 스플래시 자동 해제
+// 진입 시네마틱 인트로 (세션당 1회 · 탭/버튼 스킵 · 움직임최소화 존중)
 (function(){
   var sp=document.getElementById('splash'); if(!sp) return;
-  setTimeout(function(){ sp.classList.add('gone'); }, 1400);
-  setTimeout(function(){ if(sp.parentNode) sp.parentNode.removeChild(sp); }, 2350);
+  var reduce = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  var seen=false; try{ seen=sessionStorage.getItem('verny_intro')==='1'; }catch(e){}
+  if(reduce || seen){ if(sp.parentNode) sp.parentNode.removeChild(sp); return; }
+  try{ sessionStorage.setItem('verny_intro','1'); }catch(e){}
+  var done=false;
+  function end(){ if(done) return; done=true; sp.classList.add('gone'); setTimeout(function(){ if(sp.parentNode) sp.parentNode.removeChild(sp); }, 900); }
+  var timer=setTimeout(end, 4300);
+  sp.addEventListener('click', function(){ clearTimeout(timer); end(); });
+  var sk=document.getElementById('cineSkip'); if(sk) sk.addEventListener('click', function(e){ e.stopPropagation(); clearTimeout(timer); end(); });
 })();
 </script>
 </body>
