@@ -4,6 +4,8 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="theme-color" content="#17233f">
+<link rel="icon" type="image/png" href="./assets/favicon.png">
+<link rel="apple-touch-icon" href="./assets/favicon-180.png">
 <title>VERNY 주문서 · 베르니 프리미엄 비즈니스 양말</title>
 <meta name="description" content="VERNY 베르니 프리미엄 비즈니스 양말 주문서. Trust begins at the detail.">
 <meta property="og:type" content="website">
@@ -287,6 +289,16 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 @keyframes spWord{0%{opacity:0;transform:translateY(12px) scale(.94);letter-spacing:.26em;}100%{opacity:1;transform:none;letter-spacing:.06em;}}
 @keyframes spFade{from{opacity:0}to{opacity:1}}
 @media(prefers-reduced-motion:reduce){.splash{display:none!important;}}
+/* 프로 마감 — 토스트/스피너/검증 */
+.toast-wrap{position:fixed;left:0;right:0;bottom:24px;z-index:120;display:flex;flex-direction:column;align-items:center;gap:8px;pointer-events:none;padding:0 16px;}
+.toast{background:rgba(23,35,63,.97);color:#fff;font-size:13.5px;font-weight:500;padding:12px 20px;border-radius:12px;box-shadow:0 16px 34px -14px rgba(0,0,0,.55);display:flex;align-items:center;gap:9px;transform:translateY(18px);opacity:0;transition:transform .32s cubic-bezier(.2,.9,.3,1),opacity .32s;max-width:92%;border:1px solid rgba(193,160,90,.32);text-align:center;line-height:1.45;}
+.toast.show{transform:none;opacity:1;}
+.toast .ti{color:var(--gold-soft);font-weight:700;}
+.spin{display:inline-block;width:15px;height:15px;border:2px solid rgba(255,255,255,.35);border-top-color:#fff;border-radius:50%;animation:spin .7s linear infinite;vertical-align:-2px;margin-right:8px;}
+@keyframes spin{to{transform:rotate(360deg);}}
+@keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
+.inp.invalid{animation:shake .4s;}
+.inp.valid{padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M2 7.4l3.3 3.3L12 3' stroke='%23a9873f' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;}
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -531,6 +543,8 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
   </div>
 </div>
 
+<div class="toast-wrap" id="toastWrap"></div>
+
 <!-- 주소 검색 레이어 -->
 <div class="addr-layer" id="addrLayer">
   <div class="addr-layer-head"><span>주소 검색</span><button type="button" id="addrClose" aria-label="닫기">✕</button></div>
@@ -680,6 +694,20 @@ document.querySelectorAll('.stepper').forEach(st=>{
 
 /* ===================== 폼 동작 ===================== */
 const $ = id => document.getElementById(id);
+function toast(msg, icon){
+  const wrap=$('toastWrap'); if(!wrap) return;
+  const t=document.createElement('div'); t.className='toast';
+  t.innerHTML=(icon?'<span class="ti">'+icon+'</span>':'')+msg;
+  wrap.appendChild(t);
+  requestAnimationFrame(()=>t.classList.add('show'));
+  setTimeout(()=>{ t.classList.remove('show'); setTimeout(()=>t.remove(),320); }, 2500);
+}
+// 필수 입력 인라인 검증(✓ / 부드러운 흔들림)
+['ordName','ordTel','rcpName','rcpTel','rcpDetail'].forEach(id=>{
+  const el=$(id);
+  el.addEventListener('blur',()=>{ if(el.value.trim()){ el.classList.add('valid'); el.classList.remove('invalid'); } else el.classList.remove('valid'); });
+  el.addEventListener('input',()=>{ if(el.value.trim()) el.classList.remove('invalid'); });
+});
 $('sameChk').addEventListener('change', function(){
   if(this.checked){ $('rcpName').value=$('ordName').value; $('rcpTel').value=$('ordTel').value; }
 });
@@ -693,7 +721,7 @@ $('proof').addEventListener('change', function(){
 
 // 주소 검색 (다음 우편번호 · 임베드 오버레이)
 function openAddr(){
-  if(typeof daum==='undefined' || !daum.Postcode){ alert('주소 검색을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
+  if(typeof daum==='undefined' || !daum.Postcode){ toast('주소 검색을 불러오는 중입니다. 잠시 후 다시 시도해주세요.'); return; }
   const el=$('addrEmbed'); el.innerHTML='';
   new daum.Postcode({
     oncomplete:function(data){
@@ -764,7 +792,7 @@ $('submitBtn').addEventListener('click', async ()=>{
   if(!validate()) return;
   const btn=$('submitBtn'), lbl=$('submitLabel');
   const o=buildOrder(); lastOrder=o;
-  btn.disabled=true; lbl.textContent='주문 접수 중...';
+  btn.disabled=true; lbl.innerHTML='<span class="spin"></span>주문 접수 중...';
 
   const emailBody =
 `■ VERNY 주문 접수 [${o.ordNo}]
@@ -828,12 +856,12 @@ $('doneClose').addEventListener('click',()=>{
 });
 $('copyAcct').addEventListener('click', async function(){
   try{ await navigator.clipboard.writeText(BANK.acct.replace(/-/g,'')); this.textContent='복사됨 ✓'; setTimeout(()=>this.textContent='계좌 복사',1500); }
-  catch(e){ prompt('계좌번호',BANK.acct); }
+  catch(e){ toast('계좌번호 '+BANK.acct, '✓'); }
 });
 $('footCopy').addEventListener('click', async function(){
   const t=this.textContent;
   try{ await navigator.clipboard.writeText(BANK.acct.replace(/-/g,'')); this.textContent='복사되었습니다 ✓'; setTimeout(()=>this.textContent=t,1600); }
-  catch(e){ prompt('계좌번호',BANK.acct); }
+  catch(e){ toast('계좌번호 '+BANK.acct, '✓'); }
 });
 
 // 브랜드 스토리 스크롤 페이드인
