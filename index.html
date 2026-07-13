@@ -314,6 +314,17 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 @keyframes shake{10%,90%{transform:translateX(-1px)}20%,80%{transform:translateX(2px)}30%,50%,70%{transform:translateX(-4px)}40%,60%{transform:translateX(4px)}}
 .inp.invalid{animation:shake .4s;}
 .inp.valid{padding-right:38px;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 14 14'%3E%3Cpath d='M2 7.4l3.3 3.3L12 3' stroke='%23a9873f' stroke-width='2' fill='none' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:right 13px center;}
+/* 카드결제 — 네이버 쇼핑 버튼 */
+.pay-alt{margin-top:18px;}
+.pay-alt-div{display:flex;align-items:center;gap:12px;color:var(--muted-2);font-size:12px;letter-spacing:.02em;margin-bottom:14px;}
+.pay-alt-div::before,.pay-alt-div::after{content:"";flex:1;height:1px;background:var(--line);}
+.naver-btn{display:flex;align-items:center;gap:11px;width:100%;text-decoration:none;background:#fff;border:1.5px solid var(--navy);border-radius:14px;padding:16px 18px;transition:transform .15s, box-shadow .2s;box-shadow:0 10px 24px -18px rgba(23,35,63,.55);}
+.naver-btn:active{transform:translateY(1px) scale(.995);}
+.nb-ico{width:27px;height:27px;flex-shrink:0;border-radius:7px;background:#03c75a;color:#fff;font-weight:800;font-size:16px;display:flex;align-items:center;justify-content:center;}
+.nb-txt{flex:1;font-size:15px;color:var(--navy);font-weight:500;letter-spacing:-.01em;}
+.nb-txt b{font-weight:700;}
+.nb-arrow{color:var(--muted-2);font-size:20px;font-weight:700;line-height:1;}
+.pay-alt-note{font-size:11.5px;color:var(--muted-2);text-align:center;margin-top:11px;line-height:1.6;}
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -542,7 +553,16 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
       <button class="submit" id="submitBtn" disabled>
         <span id="submitLabel">상품을 먼저 담아주세요</span>
       </button>
-      <p class="agree">버튼을 누르면 주문 내역이 담당자에게 전달되고,<br>입금 계좌가 안내됩니다. · 결제: 무통장 입금 (카드 오픈 예정)</p>
+      <p class="agree">버튼을 누르면 주문 내역이 담당자에게 전달되고,<br>입금 계좌가 안내됩니다. · 결제: 무통장 입금 또는 카드(네이버 쇼핑)</p>
+      <div class="pay-alt">
+        <div class="pay-alt-div"><span>또는</span></div>
+        <a class="naver-btn" href="https://naver.me/GQy5DZXQ" target="_blank" rel="noopener">
+          <span class="nb-ico">N</span>
+          <span class="nb-txt">카드 결제 · <b>네이버 쇼핑</b>에서 주문</span>
+          <span class="nb-arrow">›</span>
+        </a>
+        <p class="pay-alt-note">무통장 입금이 번거로우시면 네이버페이·카드로 간편하게 결제하세요.</p>
+      </div>
     </section>
   </main>
 
