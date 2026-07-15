@@ -326,6 +326,8 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 .nb-txt b{font-weight:700;}
 .nb-arrow{color:var(--muted-2);font-size:20px;font-weight:700;line-height:1;}
 .pay-alt-note{font-size:12.5px;color:var(--gold-deep);font-weight:600;text-align:center;margin-top:11px;line-height:1.6;}
+.fstats{font-size:10.5px;letter-spacing:.05em;color:rgba(255,255,255,.34);margin-top:12px;}
+.fstats b{color:var(--gold-soft);font-weight:600;}
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -579,6 +581,7 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
     </div>
     <div class="ft" style="margin-top:16px;">현금영수증 · 세금계산서 발행 가능</div>
     <div class="fcopy">© BETTERUS · VERNY</div>
+    <div class="fstats">오늘 방문 <b id="statToday">·</b>&nbsp;·&nbsp;누적 <b id="statTotal">·</b></div>
   </footer>
 </div>
 
@@ -918,6 +921,21 @@ if('IntersectionObserver' in window){
 } else { document.querySelectorAll('.reveal').forEach(el=>el.classList.add('in')); }
 
 render();
+
+// 방문자 카운터 (오늘/누적 · 세션당 1회 집계 · 표시용)
+(function(){
+  var et=document.getElementById('statToday'), ea=document.getElementById('statTotal');
+  if(!et||!ea) return;
+  var NS='verny-order';
+  var d=new Date();
+  var day='d'+d.getFullYear()+String(d.getMonth()+1).padStart(2,'0')+String(d.getDate()).padStart(2,'0');
+  var flag='verny_v_'+day, first=true;
+  try{ first=!sessionStorage.getItem(flag); if(first) sessionStorage.setItem(flag,'1'); }catch(e){}
+  var verb=first?'hit':'get';
+  function q(k){ return fetch('https://abacus.jasoncameron.dev/'+verb+'/'+NS+'/'+k).then(function(r){return r.json();}).then(function(j){ return (j&&typeof j.value==='number')?j.value:null; }).catch(function(){ return null; }); }
+  q('total').then(function(v){ if(v!=null) ea.textContent=v.toLocaleString(); });
+  q(day).then(function(v){ if(v!=null) et.textContent=v.toLocaleString(); });
+})();
 
 // 진입 시네마틱 인트로 (세션당 1회 · 탭/버튼 스킵 · 움직임최소화 존중)
 (function(){
