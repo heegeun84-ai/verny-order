@@ -332,6 +332,11 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
 .foot-share:active{transform:translateY(1px);}
 .foot-share:hover{background:rgba(193,160,90,.12);}
 .foot-share svg{width:15px;height:15px;}
+#toTop{position:fixed;right:18px;bottom:24px;z-index:90;width:46px;height:46px;border:none;border-radius:50%;background:var(--navy);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;cursor:pointer;box-shadow:0 12px 26px -10px rgba(23,35,63,.7);opacity:0;transform:translateY(12px) scale(.9);pointer-events:none;transition:opacity .3s, transform .3s, bottom .3s;}
+#toTop.show{opacity:1;transform:none;pointer-events:auto;}
+#toTop:active{transform:translateY(1px);}
+#toTop svg{width:20px;height:20px;fill:none;stroke:currentColor;stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;}
+body.has-stick #toTop{bottom:90px;}
 </style>
 <script src="//t1.daumcdn.net/mapjsapi/bundle/postcode/prod/postcode.v2.js"></script>
 </head>
@@ -598,6 +603,7 @@ input.inp[readonly]{background:var(--paper-2);cursor:pointer;}
   </div>
 </div>
 
+<button id="toTop" type="button" aria-label="맨 위로"><svg viewBox="0 0 24 24"><polyline points="6 15 12 9 18 15"/></svg></button>
 <div class="toast-wrap" id="toastWrap"></div>
 
 <!-- 주소 검색 레이어 -->
@@ -726,6 +732,7 @@ function render(){
   else { btn.disabled=false; lbl.innerHTML=`<span class="amt">${total.toLocaleString()}원</span> · 주문 접수하기`; }
   document.getElementById('stickTotal').textContent = won(total);
   document.getElementById('stick').classList.toggle('show', units>0);
+  document.body.classList.toggle('has-stick', units>0);
 }
 function setLine(id, v){
   const el=document.getElementById(id);
@@ -918,6 +925,11 @@ $('footCopy').addEventListener('click', async function(){
   try{ await navigator.clipboard.writeText(BANK.acct.replace(/-/g,'')); this.textContent='복사되었습니다 ✓'; setTimeout(()=>this.textContent=t,1600); }
   catch(e){ toast('계좌번호 '+BANK.acct, '✓'); }
 });
+// 맨 위로 버튼 (스크롤 시 표시)
+(function(){ var b=$('toTop'); if(!b) return;
+  addEventListener('scroll',function(){ b.classList.toggle('show', (window.scrollY||document.documentElement.scrollTop)>250); }, {passive:true});
+  b.addEventListener('click',function(){ window.scrollTo({top:0,behavior:'smooth'}); });
+})();
 window.shareVerny=async function(){
   const url=location.href.split('#')[0].split('?')[0];
   if(navigator.share){ try{ await navigator.share({title:'VERNY 주문서', text:'VERNY 베르니 · 프리미엄 비즈니스 양말 주문', url:url}); }catch(e){} }
